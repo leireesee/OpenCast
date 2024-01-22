@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <link rel="stylesheet" href="style_map.css">
+</head>
+
+<body>
+    
+    <section id="contenido">
+        <div id="ubicaciones">
+            <div id="selecciona_ubicaciones">
+                <h3>Selecciona ubicaciones</h3>
+                <div class="buscador">Buscador</div>
+                <div id="div_mapa">
+                    <div id="mapid" style="height: 600px; width: 600px;"></div>
+                </div>
+            </div>
+    
+            <div id="mis_ubicaciones">
+                <h3>Mis ubicaciones</h3>
+                <div class="buscador">Buscador</div>
+                <div id="ubicaciones_seleccionadas">
+                    <div class="card_ubicacion">
+                        <article class="div_icono"></article>
+                        <article class="div_info">
+                            <div id="temperatura">30º</div>
+                            <div id="eliminar">Icono</div>
+                            <div id="lugar">
+                                <div id="ciudad">Irún</div>
+                                <div id="comunidad">Gipuzkoa, País Vasco</div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="info_ubicacion"></div>
+        <div id="ajustes_graficos"></div>
+    </section>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script>
+        var map = L.map('mapid').setView([43.345, -1.875], 11);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        var lugares = [
+            { "nombre": "Irun", "latitud": 43.3390, "longitud": -1.7896 },
+            { "nombre": "Donosti", "latitud": 43.3183, "longitud": -1.9812 },
+            { "nombre": "Renteria", "latitud": 43.3119, "longitud": -1.8985 },
+            { "nombre": "Bilbao", "latitud": 43.2629, "longitud": -2.9349 },
+        ];
+
+        lugares.forEach(lugar => {
+            var marker = L.marker([lugar.latitud, lugar.longitud]).addTo(map);
+            marker.bindTooltip(lugar.nombre, {
+                permanent: false,    // El tooltip no será permanente
+                direction: 'top',    // Se mostrará encima del marcador
+                offset: L.point(-14, -20) // Desplazamiento del tooltip respecto al marcador
+
+            })
+            marker._icon.classList.add("marcador");
+           
+        })
+
+    </script>
+    <script src="mapa.js"></script>
+    
+</body>
+
+</html>
