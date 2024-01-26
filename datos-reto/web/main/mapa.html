@@ -6,43 +6,144 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
-    <link rel="stylesheet" href="style_map.css">
+    <link rel="stylesheet" href="mapa.css">
 </head>
 
 <body>
-    
+
     <section id="contenido">
         <div id="ubicaciones">
             <div id="selecciona_ubicaciones">
                 <h3>Selecciona ubicaciones</h3>
-                <div class="buscador">Buscador</div>
+                <div class="buscador">
+                    <form action="">
+                        <input type="search" name="ubication_search" id="ubication_search" placeholder="Buscar...">
+                    </form>
+                </div>
                 <div id="div_mapa">
-                    <div id="mapid" style="height: 600px; width: 600px;"></div>
+                    <div id="mapid" style="height: 340px; width: 100%; border-radius: 20px;"></div>
                 </div>
             </div>
-    
+
             <div id="mis_ubicaciones">
                 <h3>Mis ubicaciones</h3>
-                <div class="buscador">Buscador</div>
+                <div class="buscador">
+                    <form action="">
+                        <input type="search" name="ubication_search" id="ubication_search" placeholder="Buscar...">
+                    </form>
+                </div>
                 <div id="ubicaciones_seleccionadas">
+                    <!-- card -->
                     <div class="card_ubicacion">
-                        <article class="div_icono"></article>
+                        <article class="div_icono">
+                            <img src="../img/iconos/sol.svg" alt="" id="icono">
+                        </article>
                         <article class="div_info">
-                            <div id="temperatura">30º</div>
-                            <div id="eliminar">Icono</div>
-                            <div id="lugar">
-                                <div id="ciudad">Irún</div>
-                                <div id="comunidad">Gipuzkoa, País Vasco</div>
+                            <div id="primera_linea">
+                                <div id="temperatura">
+                                    <h3 id="texto_temperatura">30º</h3>
+                                </div>
+                                <div id="eliminar">
+                                    <img src="../img/iconos/cerrar.svg" alt="" width="30px">
+                                </div>
+                            </div>
+                            <div id="segunda_linea">
+                                <div id="lugar">
+                                    <p>Irún</p>
+                                    <p>País Vasco</p>
+                                </div>
+                                <div id="humedad">
+                                    <p>80%</p>
+                                    <p>Humedad</p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- card -->
+                    <div class="card_ubicacion">
+                        <article class="div_icono">
+                            <img src="../img/iconos/sol.svg" alt="" id="icono">
+                        </article>
+                        <article class="div_info">
+                            <div id="primera_linea">
+                                <div id="temperatura">
+                                    <h3 id="texto_temperatura">30º</h3>
+                                </div>
+                                <div id="eliminar">
+                                    <img src="../img/iconos/cerrar.svg" alt="" width="30px">
+                                </div>
+                            </div>
+                            <div id="segunda_linea">
+                                <div id="lugar">
+                                    <p>Irún</p>
+                                    <p>País Vasco</p>
+                                </div>
+                                <div id="humedad">
+                                    <p>80%</p>
+                                    <p>Humedad</p>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- card -->
+                    <div class="card_ubicacion">
+                        <article class="div_icono">
+                            <img src="../img/iconos/sol.svg" alt="" id="icono">
+                        </article>
+                        <article class="div_info">
+                            <div id="primera_linea">
+                                <div id="temperatura">
+                                    <h3 id="texto_temperatura">30º</h3>
+                                </div>
+                                <div id="eliminar">
+                                    <img src="../img/iconos/cerrar.svg" alt="" width="30px">
+                                </div>
+                            </div>
+                            <div id="segunda_linea">
+                                <div id="lugar">
+                                    <p>Irún</p>
+                                    <p>País Vasco</p>
+                                </div>
+                                <div id="humedad">
+                                    <p>80%</p>
+                                    <p>Humedad</p>
+                                </div>
                             </div>
                         </article>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="info_ubicacion"></div>
-        <div id="ajustes_graficos"></div>
+        <div id="info_ubicacion">
+            <div id="fecha">
+                <p class="titulo1">Jueves</p>
+                <p>11 de Enero 2024 · 14:30</p>
+            </div>
+            <div id="info_principal">
+                <article id="info_principal_datos">
+                    <div id="info_principal_fila1">
+                        <p class="p_ciudad">Irún</p>
+                        <p class="p_provincia">País Vasco</p>
+                    </div>
+                    <h3 id="info_principal_temperatura">30º</h3>
+                    <p>Soleado</p>
+                </article>
+                <article id="info_principal_icono">
+                    <img src="../img/iconos/sol.svg" alt="">
+                </article>
+            </div>
+        </div>
+        <div id="tercera_seccion">
+            <div id="ajustes"></div>
+            <div id="seccion_grafico">
+            </div>
+
+
+        </div>
     </section>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
     <script>
         var map = L.map('mapid').setView([43.345, -1.875], 11);
@@ -66,12 +167,12 @@
 
             })
             marker._icon.classList.add("marcador");
-           
+
         })
 
     </script>
     <script src="mapa.js"></script>
-    
+
 </body>
 
 </html>
