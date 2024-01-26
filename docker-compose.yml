@@ -4,31 +4,31 @@ services:
   apache: #servidor de apache n.1
           image: httpd:latest #imagen del contenedor
           volumes:
-          - ./datos_reto/pagina_web/:/usr/local/apache2/htdocs/ #a que documento hace referencia
+          - ./datos-reto/web/:/usr/local/apache2/htdocs/ #a que documento hace referencia
           ports: #puertos
           - "8081:80"
            
   nginx:
          image: nginx:latest
          volumes: 
-         - ./datos_reto/nginx.conf:/etc/nginx/nginx.conf #archivo de configuracion para este servidor
+         - ./datos-reto/nginx.conf:/etc/nginx/nginx.conf #archivo de configuracion para este servidor
          ports:
          - "8080:80"
 
-  # laravel_api-bbdd:
-  #     image: docker.io/bitnami/laravel:10
-  #     ports:
-  #       - '8085:8000'
-  #     environment:
-  #       - DB_HOST=185.60.40.210
-  #       - DB_PORT=3306
-  #       - DB_USERNAME=Leire
-  #       - DB_PASSWORD=12345678
-  #       - DB_DATABASE=Leire
-  #     volumes:
-  #       - './datos_reto/laravel_api-bbdd:/app'
+  data-feeder:
+      image: docker.io/bitnami/laravel:10
+      ports:
+        - '8085:8000'
+      environment:
+        - DB_HOST=185.60.40.210
+        - DB_PORT=3306
+        - DB_USERNAME=Leire
+        - DB_PASSWORD=12345678
+        - DB_DATABASE=Leire
+      volumes:
+        - './datos-reto/data-feeder:/app'
 
-  laravel_sesion-bbdd:
+  opencast-api:
       image: docker.io/bitnami/laravel:10
       ports:
         - '8086:8000'
@@ -39,4 +39,4 @@ services:
         - DB_PASSWORD=12345678
         - DB_DATABASE=Leire
       volumes:
-        - './datos_reto/laravel_sesion-bbdd:/app'
+        - './datos-reto/opencast-api:/app'
