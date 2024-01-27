@@ -128,12 +128,121 @@
                         <p class="p_provincia">País Vasco</p>
                     </div>
                     <h3 id="info_principal_temperatura">30º</h3>
-                    <p>Soleado</p>
+                    <p class="p_ciudad">Soleado</p>
                 </article>
                 <article id="info_principal_icono">
                     <img src="../img/iconos/sol.svg" alt="">
                 </article>
             </div>
+
+            <!-- WIDGETS -->
+            <section id="widgets">
+                <div id="widget_prevision_por_horas">
+                    <h5 class="titulo_widget">Previsión por horas</h5>
+                    <div>
+                        <!-- HORA -->
+                        <article>
+                            <p class="p_provincia">15:00</p>
+                            <img src="../img/iconos/sol.svg" alt="">
+                            <p class="p_ciudad">29º</p>
+                        </article>
+
+                        <!-- HORA -->
+                        <article>
+                            <p class="p_provincia">15:00</p>
+                            <img src="../img/iconos/sol.svg" alt="">
+                            <p class="p_ciudad">29º</p>
+                        </article>
+
+                        <!-- HORA -->
+                        <article>
+                            <p class="p_provincia">15:00</p>
+                            <img src="../img/iconos/sol.svg" alt="">
+                            <p class="p_ciudad">29º</p>
+                        </article>
+
+                        <!-- HORA -->
+                        <article>
+                            <p class="p_provincia">15:00</p>
+                            <img src="../img/iconos/sol.svg" alt="">
+                            <p class="p_ciudad">29º</p>
+                        </article>
+
+                        <!-- HORA -->
+                        <article>
+                            <p class="p_provincia">15:00</p>
+                            <img src="../img/iconos/sol.svg" alt="">
+                            <p class="p_ciudad">29º</p>
+                        </article>
+
+                        <!-- HORA -->
+                        <article>
+                            <p class="p_provincia">15:00</p>
+                            <img src="../img/iconos/sol.svg" alt="">
+                            <p class="p_ciudad">29º</p>
+                        </article>
+
+                        <!-- HORA -->
+                        <article>
+                            <p class="p_provincia">15:00</p>
+                            <img src="../img/iconos/sol.svg" alt="">
+                            <p class="p_ciudad">29º</p>
+                        </article>
+                    </div>
+                </div>
+
+                <div id="widget_humedad">
+                    <div>
+                        <h5 class="titulo_widget">Humedad</h5>
+                        <!-- icono -->
+                        <img src="" alt="">
+                    </div>
+                    <p class="info_widget_pequeño">80<span class="medida_widget_pequeño_">%</span></p>
+                    <p>Cantidad de vapor de agua en el aire.</p>
+                </div>
+
+                <div id="widget_viento">
+                    <div>
+                        <h5 class="titulo_widget">Viento</h5>
+                        <!-- icono -->
+                        <img src="" alt="">
+                    </div>
+                    <p class="info_widget_pequeño">4<span class="medida_widget_pequeño_">km/h</span>N</p>
+                    <p>Cantidad de vapor de agua en el aire.</p>
+                </div>
+
+                <div id="widget_precipitaciones">
+                    <div>
+                        <h5 class="titulo_widget">Precipitaciones acumuladas</h5>
+                    </div>
+                    <div>
+                        <iframe width="100%" height="250" src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=°C&metricWind=km/h&zoom=9&overlay=rainAccu&product=ecmwf&level=surface&lat=43.031&lon=-2.313&message=true" frameborder="0"></iframe>
+                    </div>
+                </div>
+
+                <div class="degradado_blanco"></div>
+                
+            </section>
+            <section id="drag_and_drop">
+                <div>
+                    <article class="icono_widget" id="viento">
+                        <img src="../img/iconos/viento.png" alt="" draggable="false">
+                        <p>Viento</p>
+                        <p>1x1</p>
+                    </article>
+                    <article class="icono_widget" id="lluvias">
+                        <img src="../img/iconos/paraguas.png" alt="" draggable="false">
+                        <p>Lluvias</p>
+                        <p>2x2</p>
+                    </article>
+                    <article class="icono_widget" id="sol">
+                        <img src="../img/iconos/amanecer.png" alt="" draggable="false">
+                        <p>Sol</p>
+                        <p>1x2</p>
+                    </article>
+                </div>
+
+            </section>
         </div>
         <div id="tercera_seccion">
             <div id="ajustes"></div>
@@ -158,19 +267,26 @@
             { "nombre": "Bilbao", "latitud": 43.2629, "longitud": -2.9349 },
         ];
 
+        var myIcon = L.icon({
+            iconUrl: '../img/iconos/icono_baliza_roja.svg',
+            iconSize: [25, 50],
+            iconAnchor: [10, 55],
+            popupAnchor: [-3, -76],
+        });
+
         lugares.forEach(lugar => {
-            var marker = L.marker([lugar.latitud, lugar.longitud]).addTo(map);
+            var marker = L.marker([lugar.latitud, lugar.longitud], {icon: myIcon}).addTo(map);
             marker.bindTooltip(lugar.nombre, {
                 permanent: false,    // El tooltip no será permanente
                 direction: 'top',    // Se mostrará encima del marcador
-                offset: L.point(-14, -20) // Desplazamiento del tooltip respecto al marcador
+                offset: L.point(3, -55) // Desplazamiento del tooltip respecto al marcador
 
             })
             marker._icon.classList.add("marcador");
-
         })
 
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="mapa.js"></script>
 
 </body>
