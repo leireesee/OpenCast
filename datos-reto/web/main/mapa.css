@@ -244,6 +244,7 @@ input {
 /* width */
 #widgets::-webkit-scrollbar {
     width: 10px;
+    display: none;
 }
 
 /* Track */
@@ -314,10 +315,6 @@ input {
     /* margin-top: 20px; */
 }
 
-#widget_viento {
-    display: none;
-}
-
 .info_widget_pequeño {
     font-weight: 700;
     font-size: 40px;
@@ -327,14 +324,24 @@ input {
     font-size: 25px;
 }
 
+/*Viento*/
+#widget_viento {
+    display: none;
+}
+
 /*Precipitaciones*/
-#widget_precipitaciones {
+#widget_precipitaciones, #widget_sol {
     width: 100%;
     background-color: white;
     padding: 23px;
     border-radius: 20px;
+    display: none;
 }
 
+/*Sol*/
+#widget_sol{
+    display: none;
+}
 
 /*DRAG AND DROP ====================*/
 

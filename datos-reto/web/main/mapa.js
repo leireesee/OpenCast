@@ -29,15 +29,16 @@ $(document).ready(function () {
         const id_widget = event.originalEvent.dataTransfer.getData('text')
         switch (id_widget) {
             case "sol":
-                // $('#sol').appendTo(this)
+                $('#sol').hide()
+                $('#widget_sol').show()
                 break;
 
             case "lluvias":
-                // $('#lluvias').appendTo(this)
+                $('#lluvias').hide()
+                $('#widget_precipitaciones').show()
                 break;
 
             case "viento":
-                // $('#viento').appendTo(this)
                 $('#viento').hide()
                 $('#widget_viento').show()
                 break;
