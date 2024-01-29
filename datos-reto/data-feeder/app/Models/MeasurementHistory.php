@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class MeasurementHistory
+class MeasurementHistory extends Model
 {
     use HasFactory, Notifiable;
+
+    public $timestamps = false;
 
     protected $fillable = [
         'location_id',

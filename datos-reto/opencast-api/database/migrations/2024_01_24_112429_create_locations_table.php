@@ -16,12 +16,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('latitude');
             $table->string('longitude');
-            $table->unsignedBigInteger('euskalmet_id');
+            $table->unsignedBigInteger('id_locations_euskalmet');
+            $table->unsignedBigInteger('id_eltiempo');
             $table->string('municipality_code_eltiempo'); /*codigo provincia*/
-            $table->unsignedBigInteger('eltiempo_id');
             /*FOREIGN KEYS*/
-            $table->foreign('eltiempo_id')->references('id')->on('eltiempos');
-            $table->foreign('euskalmet_id')->references('id')->on('euskalmets');
+            $table->foreign('id_eltiempo')->references('id')->on('eltiempos');
+            $table->foreign('id_locations_euskalmet')->references('id')->on('locations_euskalmets');
         });
     }
 

@@ -14,11 +14,10 @@ class Euskalmet extends Authenticatable
     protected $fillable = [
         'region_code',
         'zone_code',
-        'name'
     ];
 
-    public function locations()
+    public function locations_euskalmet()
     {
-        return $this->hasMany(Location::class);
+        return $this->hasMany(LocationsEuskalmet::class);
     }
 }

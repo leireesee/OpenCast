@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('euskalmets', function (Blueprint $table) {
             $table->id();
             $table->string('region_code');
-            $table->string('zone_code');
-            $table->string('name');
+            $table->string('zone_code')->unique();
         });
     }
 

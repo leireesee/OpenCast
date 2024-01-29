@@ -20,6 +20,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/*Alimentacion tabla ELTIEMPO*/
 Route::get('/eltiempo', [DataFeederController::class, 'fetchEltiempoProvincias']);
 
+/*Alimentacion tabla EUSKALMET*/
 Route::get('/euskalmet', [DataFeederController::class, 'fetchEuskalmetRegionesZonas']);
+
+/*Alimentacion tabla LOCATIONS EUSKALMET*/
+Route::get('/euskalmet_locations', [DataFeederController::class, 'fetchEuskalmetRegionesZonasLocations']);
+
+/*Alimentacion tabla LOCATIONS*/
+Route::get('/locations', [DataFeederController::class, 'fetchLocations']);

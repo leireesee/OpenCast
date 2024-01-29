@@ -21,14 +21,14 @@ class Location extends Authenticatable
         'name',
         'latitude',
         'longitude',
-        'id_euskalmet',
+        'id_locations_euskalmet',
         'id_eltiempo',
         'municipality_code_eltiempo'
     ];
     
-    public function euskalmet()
+    public function locations_euskalmet()
     {
-        return $this->belongsTo(Euskalmet::class);
+        return $this->belongsTo(LocationsEuskalmet::class);
     }
     public function eltiempo()
     {

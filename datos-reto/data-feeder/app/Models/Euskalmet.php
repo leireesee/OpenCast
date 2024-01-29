@@ -6,18 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
-class Euskalmet
+class Euskalmet extends Model
 {
     use HasFactory, Notifiable;
+
+    public $timestamps = false;
 
     protected $fillable = [
         'region_code',
         'zone_code',
-        'name'
     ];
 
-    public function locations()
+    public function locations_euskalmet()
     {
-        return $this->hasMany(Location::class);
+        return $this->hasMany(LocationsEuskalmet::class);
     }
 }
