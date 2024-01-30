@@ -124,15 +124,32 @@ class DataFeederController extends Controller
         $eltiempo_data = Eltiempo::all();
 
         foreach($eltiempo_data as $provincia){
-            print_r($provincia['province_code']);
-
-            $eltiempoURL = 'https://www.el-tiempo.net/api/json/v2/provincias/' . $province_code . '';
+            
+            $eltiempoURL = 'https://www.el-tiempo.net/api/json/v2/provincias/' . $provincia['province_code'] . '/municipios';
 
             $response = json_decode(@file_get_contents($eltiempoURL), true);
 
-            $arrayProvincias = $response['provincias'];
+            $arrayMunicipios = $response['municipios'];
+
+            print_r($arrayMunicipios[0]["NOMBRE"].' '.$arrayMunicipios[0]["LATITUD_ETRS89_REGCAN95"].' '.$arrayMunicipios[0]["LONGITUD_ETRS89_REGCAN95"]);
+            
         }
 
     }   
 
 }
+
+
+// foreach($arrayMunicipios as $municipio){
+            //     $municipality_code = substr($municipio['CODIGOINE'], 0, 5);
+                
+            //     print_r($municipality_code . ' ');
+
+            //     $eltiempoNombreMunicipiosURL = 'https://www.el-tiempo.net/api/json/v2/provincias/' . $provincia['province_code'] . '/municipios/' . $municipality_code;
+
+            //     $response = json_decode(@file_get_contents($eltiempoNombreMunicipiosURL), true);
+
+            //     $arrayNombreMunicipios = $response['nombre_municipios'];
+
+            //     print_r($response);
+            // }
