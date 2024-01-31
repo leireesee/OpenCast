@@ -31,3 +31,6 @@ Route::get('/euskalmet_locations', [DataFeederController::class, 'fetchEuskalmet
 
 /*Alimentacion tabla LOCATIONS*/
 Route::get('/locations', [DataFeederController::class, 'fetchLocations']);
+
+/*Alimentacion tabla LOCATION HISTORIES*/
+Route::get('/locations_histories', [DataFeederController::class, 'fetchLocationHistories']);

@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Eltiempo;
 use App\Models\Euskalmet;
 use App\Models\LocationsEuskalmet;
+use App\Models\Location;
+use App\Models\MeasurementHistory;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class DataFeederController extends Controller
 {
@@ -17,8 +21,6 @@ class DataFeederController extends Controller
         $response = json_decode(@file_get_contents($eltiempoURL), true);
 
         $arrayProvincias = $response['provincias'];
-
-
 
         foreach($arrayProvincias as $provincia) {
             $eltiempo = new Eltiempo(); 
@@ -116,12 +118,16 @@ class DataFeederController extends Controller
 
     /*Alimentacion tabla LOCATIONS*/
     public function fetchLocations(){
-        /*
-        1.fetch con el province_code de la tabla Eltiempos
-        2.conseguir los 5 primeros digitos del CODIGOINE de municpio
-        3.hacer fetch de el muncipio y recoger latitud, longitud y nombre e insertar en tabla
-        */
         $eltiempo_data = Eltiempo::all();
+
+        $ciudadesSeleccionadas = [
+            'Vitoria-Gasteiz' => 'gasteiz',
+            'Irun' => 'irun',
+            'Hondarribia' => 'hondarribia',
+            'Oiartzun' => 'oiartzun',
+            'Donostia/San Sebastián' => 'donostia',
+            'Bilbao' => 'bilbao'
+        ];
 
         foreach($eltiempo_data as $provincia){
             
@@ -131,25 +137,86 @@ class DataFeederController extends Controller
 
             $arrayMunicipios = $response['municipios'];
 
-            print_r($arrayMunicipios[0]["NOMBRE"].' '.$arrayMunicipios[0]["LATITUD_ETRS89_REGCAN95"].' '.$arrayMunicipios[0]["LONGITUD_ETRS89_REGCAN95"]);
+            foreach($arrayMunicipios as $municipio) {
+                if (!in_array($municipio['NOMBRE'], array_keys($ciudadesSeleccionadas))) continue;
+
+                $locationsEuskalmetJSON = LocationsEuskalmet::where('name', '=', $ciudadesSeleccionadas[$municipio['NOMBRE']])->get();
+                
+                $locationsEuskalmet = json_decode($locationsEuskalmetJSON, true);
+                
+                // Log::info($locationsEuskalmetJSON);
+
+                // print_r($municipio["NOMBRE"].' '.$municipio["LATITUD_ETRS89_REGCAN95"].' '.$municipio["LONGITUD_ETRS89_REGCAN95"].' '.$locationsEuskalmet[0]['id']);
+
+                $location = new Location();
+                $location->name = $locationsEuskalmet[0]['name']; 
+                $location->latitude = $municipio['LATITUD_ETRS89_REGCAN95'];
+                $location->longitude = $municipio['LONGITUD_ETRS89_REGCAN95'];
+                $location->id_locations_euskalmet = $locationsEuskalmet[0]['id'];
+                $location->id_eltiempo = $provincia['id'];
+                $location->municipality_code_eltiempo = substr($municipio['CODIGOINE'], 0, 5);
+                $location -> save();
+
+            }
+            
+        }   
+
+    }
+
+    /*Alimentacion tabla LOCATION HISTORIES*/
+    public function fetchLocationHistories(){
+        $location_data = Location::all();
+
+        foreach($location_data as $location){
+
+            $eltiempo_dataJSON = Eltiempo::where('id', '=', $location['id_eltiempo'])->get();
+
+            $eltiempo_data = json_decode($eltiempo_dataJSON, true);
+                        
+            $url = 'https://www.el-tiempo.net/api/json/v2/provincias/' .$eltiempo_data[0]['province_code']. '/municipios/' . $location['municipality_code_eltiempo'];
+
+            // print_r($url);
+
+            $response = json_decode(@file_get_contents($url), true);
+
+            // $arrayWeather = $response['temperatura_actual'];
+
+            // print_r($arrayWeather . ' ');
+
+            $direccionViento;
+            $velocidadViento;
+
+            $locationHistory = new MeasurementHistory();
+            $locationHistory->location_id = $location['id'];
+            $locationHistory->description = $response['stateSky']['description'];
+            $locationHistory->date = $response['fecha'];
+            $locationHistory->hour = Carbon::now()->toTimeString();
+            $locationHistory->temperature = $response['temperatura_actual'];
+            $locationHistory->max_temperature = $response['temperaturas']['max'];
+            $locationHistory->min_temperature = $response['temperaturas']['min'];
+            $locationHistory->humidity = $response['humedad'];
+            $locationHistory->wind_speed = $response['viento'];
+            $periodo = explode(":", Carbon::now()->toTimeString())[0];
+            // $locationHistory->wind_direction = $arrayWeather['pronostico']['hoy']['viento'][''];
+
+            $arrayViento = $response['pronostico']['hoy']['viento'];
+
+            foreach($arrayViento as $viento) {
+                if($viento['@attributes']['periodo'] == $periodo) {
+                    $direccionViento = $viento['direccion'];
+                    $velocidadViento = $viento['velocidad'];
+                }
+            }
+            $locationHistory->wind_speed = $velocidadViento;
+            $locationHistory->wind_direction = $direccionViento;
+            $locationHistory->precipitation = $response['precipitacion'];
+            $locationHistory->sunrise = $response['pronostico']['hoy']['@attributes']['orto'];
+            $locationHistory->sunset = $response['pronostico']['hoy']['@attributes']['ocaso'];
+            //Log::info($locationHistory);
+            $locationHistory->save();
             
         }
 
-    }   
+    }
 
 }
-
-
-// foreach($arrayMunicipios as $municipio){
-            //     $municipality_code = substr($municipio['CODIGOINE'], 0, 5);
-                
-            //     print_r($municipality_code . ' ');
-
-            //     $eltiempoNombreMunicipiosURL = 'https://www.el-tiempo.net/api/json/v2/provincias/' . $provincia['province_code'] . '/municipios/' . $municipality_code;
-
-            //     $response = json_decode(@file_get_contents($eltiempoNombreMunicipiosURL), true);
-
-            //     $arrayNombreMunicipios = $response['nombre_municipios'];
-
-            //     print_r($response);
-            // }
