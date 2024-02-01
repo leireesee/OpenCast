@@ -100,17 +100,17 @@ class FakeDataFeederController extends Controller
             $dato->hour =  
             $dato->save();
 
-            MeasurementHistory::create([
-                'location_id' => $dato->location_id,
-                'description' => $dato->description,
-                $locationHistory->hour = Carbon::now()->toTimeString();
-                'latitud' => $dato-
-                'longitud' => $data['municipio']['LONGITUD_ETRS89_REGCAN95'],
-                'temperatura' => $data['temperatura_actual'] == "" ? 0 : $data['temperatura_actual'],
-                'humedad' => $data['humedad'] == "" ? 0 : $data['humedad'],
-                'lluvia' => $data['lluvia'] == "" ? 0 : $data['lluvia'],
-                'viento' => $data['viento'] == "" ? 0 : $data['viento'],
-                'precipitacion' => $data['precipitacion'] == "Ip" ? 0 : $data['precipitacion'],]);
+            // MeasurementHistory::create([
+            //     'location_id' => $dato->location_id,
+            //     'description' => $dato->description,
+            //     $locationHistory->hour = Carbon::now()->toTimeString();
+            //     'latitud' => $dato-
+            //     'longitud' => $data['municipio']['LONGITUD_ETRS89_REGCAN95'],
+            //     'temperatura' => $data['temperatura_actual'] == "" ? 0 : $data['temperatura_actual'],
+            //     'humedad' => $data['humedad'] == "" ? 0 : $data['humedad'],
+            //     'lluvia' => $data['lluvia'] == "" ? 0 : $data['lluvia'],
+            //     'viento' => $data['viento'] == "" ? 0 : $data['viento'],
+            //     'precipitacion' => $data['precipitacion'] == "Ip" ? 0 : $data['precipitacion'],]);
         
         }
     }
