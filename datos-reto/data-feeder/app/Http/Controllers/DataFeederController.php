@@ -109,6 +109,7 @@ class DataFeederController extends Controller
                 $locationsEuskalmet->name = $location['regionZoneLocationId'];
                 $locationsEuskalmet->id_euskalmet = $zona['id'];
                 $locationsEuskalmet->save();
+                // Log::info($locationsEuskalmet);
             }
 
         }
@@ -136,7 +137,7 @@ class DataFeederController extends Controller
             $response = json_decode(@file_get_contents($eltiempoURL), true);
 
             $arrayMunicipios = $response['municipios'];
-
+            
             foreach($arrayMunicipios as $municipio) {
                 if (!in_array($municipio['NOMBRE'], array_keys($ciudadesSeleccionadas))) continue;
 
@@ -144,7 +145,7 @@ class DataFeederController extends Controller
                 
                 $locationsEuskalmet = json_decode($locationsEuskalmetJSON, true);
                 
-                // Log::info($locationsEuskalmetJSON);
+                // Log::info($ciudadesSeleccionadas[$municipio['NOMBRE']]);
 
                 // print_r($municipio["NOMBRE"].' '.$municipio["LATITUD_ETRS89_REGCAN95"].' '.$municipio["LONGITUD_ETRS89_REGCAN95"].' '.$locationsEuskalmet[0]['id']);
 
@@ -176,6 +177,7 @@ class DataFeederController extends Controller
             $url = 'https://www.el-tiempo.net/api/json/v2/provincias/' .$eltiempo_data[0]['province_code']. '/municipios/' . $location['municipality_code_eltiempo'];
 
             // print_r($url);
+            // Log::info($url);
 
             $response = json_decode(@file_get_contents($url), true);
 
@@ -183,8 +185,8 @@ class DataFeederController extends Controller
 
             // print_r($arrayWeather . ' ');
 
-            $direccionViento;
-            $velocidadViento;
+            $direccionViento = '';
+            $velocidadViento = '';
 
             $locationHistory = new MeasurementHistory();
             $locationHistory->location_id = $location['id'];
@@ -209,10 +211,10 @@ class DataFeederController extends Controller
             }
             $locationHistory->wind_speed = $velocidadViento;
             $locationHistory->wind_direction = $direccionViento;
-            $locationHistory->precipitation = $response['precipitacion'];
+            $locationHistory->precipitation = $response['precipitacion'] == 'Ip' ? 0 : $response['precipitacion'];
             $locationHistory->sunrise = $response['pronostico']['hoy']['@attributes']['orto'];
             $locationHistory->sunset = $response['pronostico']['hoy']['@attributes']['ocaso'];
-            //Log::info($locationHistory);
+            // Log::info($locationHistory);
             $locationHistory->save();
             
         }

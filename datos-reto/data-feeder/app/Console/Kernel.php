@@ -19,7 +19,11 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         // $schedule->call(["App\Http\Controllers\DataFeederController@fetchEltiempoProvincias"])->everyFifteenSeconds();
-        $schedule->command('app:eltiempo-command')->everyMinute();
+        $schedule->command('app:eltiempo-command')->everyFifteenMinutes();
+        $schedule->command('app:euskalmet-command')->everyFifteenMinutes();
+        $schedule->command('app:locations-euskalmet-command')->everyFifteenMinutes();
+        $schedule->command('app:location-command')->everyFifteenMinutes();
+        $schedule->command('app:measurement-history-command')->everyFifteenMinutes();
     }
 
     /**

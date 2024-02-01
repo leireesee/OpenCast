@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\DataFeederController;
+use App\Http\Controllers\FakeDataFeederController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,8 @@ Route::get('/locations', [DataFeederController::class, 'fetchLocations']);
 
 /*Alimentacion tabla LOCATION HISTORIES*/
 Route::get('/locations_histories', [DataFeederController::class, 'fetchLocationHistories']);
+
+
+
+/*Generacion de datos aleatorios*/
+Route::get('/last_data', [FakeDataFeederController::class, 'generateRandomData']);
