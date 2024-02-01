@@ -6,6 +6,7 @@ use App\Models\Location;
 use App\Models\MeasurementHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class FakeDataFeederController extends Controller
 {
@@ -94,25 +95,32 @@ class FakeDataFeederController extends Controller
                 $cont = -1;
             }
 
-            $dato->temperature = $dato->temperature + $cont;
-            $dato->humidity = $dato->humidity + $cont;
-            $dato->wind_speed = $dato->wind_speed + $cont;
-            $dato->hour =  
-            $dato->save();
+            //generar las temperaturas segun temp maxima y temp minima
+            if($dato->temperatura + 1 > $dato->max_temperatura){
+                $dato->temperatura = $dato->temperatura - 1;
+            } else if ($dato->temperatura - 1 < $dato->min_temperatura) {
+                $dato->temperatura = $dato->temperatura + 1;
+            }            
 
-            // MeasurementHistory::create([
-            //     'location_id' => $dato->location_id,
-            //     'description' => $dato->description,
-            //     $locationHistory->hour = Carbon::now()->toTimeString();
-            //     'latitud' => $dato-
-            //     'longitud' => $data['municipio']['LONGITUD_ETRS89_REGCAN95'],
-            //     'temperatura' => $data['temperatura_actual'] == "" ? 0 : $data['temperatura_actual'],
-            //     'humedad' => $data['humedad'] == "" ? 0 : $data['humedad'],
-            //     'lluvia' => $data['lluvia'] == "" ? 0 : $data['lluvia'],
-            //     'viento' => $data['viento'] == "" ? 0 : $data['viento'],
-            //     'precipitacion' => $data['precipitacion'] == "Ip" ? 0 : $data['precipitacion'],]);
-        
+            //insertamos en la base de datos los datos inventados
+            MeasurementHistory::create([
+                'location_id' => $dato->location_id,
+                'description' => $dato->description,
+                'date'=> Carbon::now('GMT+1')->toDateString(),
+                'hour'=> Carbon::now('GMT+1')->toTimeString(),
+                'temperature' => $dato->temperature,
+                'max_temperature' => $dato->max_temperature,
+                'min_temperature' => $dato->min_temperature,
+                'humidity'=> $dato->humidity +($dato->humidity == 0 ? 1:$cont),
+                'wind_speed'=> $dato->wind_speed +($dato->wind_speed == 0 ? 1:$cont),
+                'wind_direction' => $dato->wind_direction,
+                'precipitation' => $dato->precipitation,
+                'sunrise' => $dato->sunrise,
+                'sunset' =>  $dato->sunset,
+            ]);
+
         }
+        
     }
     
 }

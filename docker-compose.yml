@@ -27,6 +27,7 @@ services:
         - DB_DATABASE=Leire
       volumes:
         - './datos-reto/data-feeder:/app'
+      command: ["php", "artisan", "schedule:work"]
 
   opencast-api:
       image: docker.io/bitnami/laravel:10

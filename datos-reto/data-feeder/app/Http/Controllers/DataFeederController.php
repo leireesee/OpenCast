@@ -192,13 +192,13 @@ class DataFeederController extends Controller
             $locationHistory->location_id = $location['id'];
             $locationHistory->description = $response['stateSky']['description'];
             $locationHistory->date = $response['fecha'];
-            $locationHistory->hour = Carbon::now()->toTimeString();
+            $locationHistory->hour = Carbon::now('GMT+1')->toTimeString();
             $locationHistory->temperature = $response['temperatura_actual'];
             $locationHistory->max_temperature = $response['temperaturas']['max'];
             $locationHistory->min_temperature = $response['temperaturas']['min'];
             $locationHistory->humidity = $response['humedad'];
             $locationHistory->wind_speed = $response['viento'];
-            $periodo = explode(":", Carbon::now()->toTimeString())[0];
+            $periodo = explode(":", Carbon::now('GMT+1')->toTimeString())[0];
             // $locationHistory->wind_direction = $arrayWeather['pronostico']['hoy']['viento'][''];
 
             $arrayViento = $response['pronostico']['hoy']['viento'];
