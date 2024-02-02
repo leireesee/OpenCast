@@ -40,3 +40,6 @@ Route::get('/locations_histories', [DataFeederController::class, 'fetchLocationH
 
 /*Generacion de datos aleatorios*/
 Route::get('/last_data', [FakeDataFeederController::class, 'generateRandomData']);
+
+/*Generacion de datos aleatorios ultimo año*/
+// Route::get('/last_year_data', [FakeDataFeederController::class, 'generateLastYearData']);
