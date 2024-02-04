@@ -5,9 +5,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+
+    <!-- Enlace CSSs propios -->
     <link rel="stylesheet" href="mapa.css">
+
+    <!-- Tipografias -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Enlace JQuery UI -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+    <!-- Enlace Leaflet -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+
+    <!-- Script JQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Script JQuery UI -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <!-- Script LeafLet -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+
+    <!-- Script Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
+
+<script>
+    $(function () {
+        $(document).tooltip({
+            position: { my: "bottom-13", at: "top" },
+            content: "<div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'><article><p style='font-size: 14px; font-weight: 400'>Mañana:</p><p style='font-size: 40px; font-weight: 600; line-height: 37px; margin-top: 5px'>30º</p><p style='font-weight: 200; font-size: 13px'>Soleado</p></article><article><img src='../img/iconos/sol.svg' width='60px' style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'></article></div><img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>"
+        });
+    });
+</script>
+
+<style>
+    .ui-tooltip {
+        width: 170px;
+        background-color: #28384A;
+        color: white;
+        border: none !important;
+        box-shadow: none;
+        border-radius: 10px;
+        font-family: 'Inter', sans-serif;
+        padding: 13px;
+    }
+</style>
+
+
 
 <body>
 
@@ -32,87 +81,7 @@
                         <input type="search" name="ubication_search" id="ubication_search" placeholder="Buscar...">
                     </form>
                 </div>
-                <div id="ubicaciones_seleccionadas">
-                    <!-- card -->
-                    <div class="card_ubicacion">
-                        <article class="div_icono">
-                            <img src="../img/iconos/sol.svg" alt="" id="icono">
-                        </article>
-                        <article class="div_info">
-                            <div id="primera_linea">
-                                <div id="temperatura">
-                                    <h3 id="texto_temperatura">30º</h3>
-                                </div>
-                                <div id="eliminar">
-                                    <img src="../img/iconos/cerrar.svg" alt="" width="30px">
-                                </div>
-                            </div>
-                            <div id="segunda_linea">
-                                <div id="lugar">
-                                    <p>Irún</p>
-                                    <p>País Vasco</p>
-                                </div>
-                                <div id="humedad">
-                                    <p>80%</p>
-                                    <p>Humedad</p>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-
-                    <!-- card -->
-                    <div class="card_ubicacion">
-                        <article class="div_icono">
-                            <img src="../img/iconos/sol.svg" alt="" id="icono">
-                        </article>
-                        <article class="div_info">
-                            <div id="primera_linea">
-                                <div id="temperatura">
-                                    <h3 id="texto_temperatura">30º</h3>
-                                </div>
-                                <div id="eliminar">
-                                    <img src="../img/iconos/cerrar.svg" alt="" width="30px">
-                                </div>
-                            </div>
-                            <div id="segunda_linea">
-                                <div id="lugar">
-                                    <p>Irún</p>
-                                    <p>País Vasco</p>
-                                </div>
-                                <div id="humedad">
-                                    <p>80%</p>
-                                    <p>Humedad</p>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-
-                    <!-- card -->
-                    <div class="card_ubicacion">
-                        <article class="div_icono">
-                            <img src="../img/iconos/sol.svg" alt="" id="icono">
-                        </article>
-                        <article class="div_info">
-                            <div id="primera_linea">
-                                <div id="temperatura">
-                                    <h3 id="texto_temperatura">30º</h3>
-                                </div>
-                                <div id="eliminar">
-                                    <img src="../img/iconos/cerrar.svg" alt="" width="30px">
-                                </div>
-                            </div>
-                            <div id="segunda_linea">
-                                <div id="lugar">
-                                    <p>Irún</p>
-                                    <p>País Vasco</p>
-                                </div>
-                                <div id="humedad">
-                                    <p>80%</p>
-                                    <p>Humedad</p>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
+                <div id="ubicaciones_seleccionadas">                                        
                     <div class="degradado_blanco1"></div>
                 </div>
             </div>
@@ -217,7 +186,9 @@
                         <h5 class="titulo_widget">Precipitaciones acumuladas</h5>
                     </div>
                     <div>
-                        <iframe width="100%" height="250" src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=°C&metricWind=km/h&zoom=9&overlay=rainAccu&product=ecmwf&level=surface&lat=43.031&lon=-2.313&message=true" frameborder="0"></iframe>
+                        <iframe width="100%" height="250"
+                            src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=mm&metricTemp=°C&metricWind=km/h&zoom=9&overlay=rainAccu&product=ecmwf&level=surface&lat=43.031&lon=-2.313&message=true"
+                            frameborder="0"></iframe>
                     </div>
                 </div>
 
@@ -239,12 +210,12 @@
                         </div>
                     </div>
                     <div>
-                        
+
                     </div>
                 </div>
 
                 <div class="degradado_blanco"></div>
-                
+
             </section>
             <section id="drag_and_drop">
                 <div>
@@ -271,46 +242,32 @@
             <div id="ajustes"></div>
             <div id="seccion_grafico">
                 <h3>Gráficos de interés</h3>
+                <form action="">
+                    <div>
+                        <label for="">Fecha inicio:</label>
+                        <input type="date">
+                    </div>
+                    <div>
+                        <label for="">Fecha fin:</label>
+                        <input type="date">
+                    </div>
+                </form>
+                <div>
+                    <canvas id="grafico" width="200px" height="150px"></canvas>
+                </div>
             </div>
 
 
         </div>
     </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
     <script>
         var map = L.map('mapid').setView([43.345, -1.875], 11);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
-
-        var lugares = [
-            { "nombre": "Irun", "latitud": 43.3390, "longitud": -1.7896 },
-            { "nombre": "Donosti", "latitud": 43.3183, "longitud": -1.9812 },
-            { "nombre": "Renteria", "latitud": 43.3119, "longitud": -1.8985 },
-            { "nombre": "Bilbao", "latitud": 43.2629, "longitud": -2.9349 },
-        ];
-
-        var myIcon = L.icon({
-            iconUrl: '../img/iconos/icono_baliza_roja.svg',
-            iconSize: [25, 50],
-            iconAnchor: [10, 55],
-            popupAnchor: [-3, -76],
-        });
-
-        lugares.forEach(lugar => {
-            var marker = L.marker([lugar.latitud, lugar.longitud], {icon: myIcon}).addTo(map);
-            marker.bindTooltip(lugar.nombre, {
-                permanent: false,    // El tooltip no será permanente
-                direction: 'top',    // Se mostrará encima del marcador
-                offset: L.point(3, -55) // Desplazamiento del tooltip respecto al marcador
-
-            })
-            marker._icon.classList.add("marcador");
-        })
-
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
     <script src="mapa.js"></script>
 
 </body>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MeasurementHistory;
+use App\Models\Location;
 use Illuminate\Http\Request;
 
 class MeasurementHistoryController extends Controller
@@ -12,7 +13,20 @@ class MeasurementHistoryController extends Controller
      */
     public function index()
     {
-        //
+        $locations_data = Location::all();
+        $data =  array();
+        $completeData = array();
+        foreach ($locations_data as $location){
+            $measurement_data = MeasurementHistory::where(
+                'location_id', '=', $location['id'] 
+            )->orderBy('date', 'desc')->first();
+            array_push($data,$measurement_data);
+        }
+
+        array_push($completeData, $locations_data);
+        array_push($completeData, $data);
+
+        return $completeData;
     }
 
     /**

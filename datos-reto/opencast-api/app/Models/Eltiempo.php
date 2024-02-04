@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-class Eltiempo extends Authenticatable
+class Eltiempo extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 

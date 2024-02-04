@@ -85,7 +85,7 @@ class FakeDataFeederController extends Controller
         foreach ($locations_data as $location){
             $measurement_data = MeasurementHistory::where(
                 'location_id', '=', $location['id'] 
-            )->first();
+            )->orderBy('date', 'desc')->first();
             array_push($data,$measurement_data);
         }
 

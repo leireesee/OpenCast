@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
 
-class Location extends Authenticatable
+class Location extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 

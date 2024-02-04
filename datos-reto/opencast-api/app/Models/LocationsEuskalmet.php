@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-class LocationsEuskalmet extends Authenticatable
+class LocationsEuskalmet extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 

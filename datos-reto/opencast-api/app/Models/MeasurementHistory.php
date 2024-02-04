@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-class MeasurementHistory extends Authenticatable
+class MeasurementHistory extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 
