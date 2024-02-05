@@ -12,7 +12,8 @@
     <!-- Tipografias -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
     <!-- Enlace JQuery UI -->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -81,24 +82,24 @@
                         <input type="search" name="ubication_search" id="ubication_search" placeholder="Buscar...">
                     </form>
                 </div>
-                <div id="ubicaciones_seleccionadas">                                        
-                    <div class="degradado_blanco1"></div>
+                <div id="ubicaciones_seleccionadas">
+                    <!-- <div class="degradado_blanco1"></div> -->
                 </div>
             </div>
         </div>
         <div id="info_ubicacion">
             <div id="fecha">
-                <p class="titulo1">Jueves</p>
-                <p>11 de Enero 2024 · 14:30</p>
+                <!-- <p class="titulo1" id="dia_semana">Jueves</p>
+                <p><span id="fecha_info">11 de Enero 2024</span> · <span id="hora">14:30</span></p> -->
             </div>
             <div id="info_principal">
                 <article id="info_principal_datos">
                     <div id="info_principal_fila1">
-                        <p class="p_ciudad">Irún</p>
+                        <p class="p_ciudad" id="ciudad">Irún</p>
                         <p class="p_provincia">País Vasco</p>
                     </div>
                     <h3 id="info_principal_temperatura">30º</h3>
-                    <p class="p_ciudad">Soleado</p>
+                    <p id="descripcion" class="p_ciudad">Soleado</p>
                 </article>
                 <article id="info_principal_icono">
                     <img src="../img/iconos/sol.svg" alt="">
@@ -167,7 +168,7 @@
                         <!-- icono -->
                         <img src="" alt="">
                     </div>
-                    <p class="info_widget_pequeño">80<span class="medida_widget_pequeño_">%</span></p>
+                    <p class="info_widget_pequeño" id="humedad_widget_humedad">80<span class="medida_widget_pequeño_">%</span></p>
                     <p>Cantidad de vapor de agua en el aire.</p>
                 </div>
 
@@ -177,8 +178,8 @@
                         <!-- icono -->
                         <img src="" alt="">
                     </div>
-                    <p class="info_widget_pequeño">4<span class="medida_widget_pequeño_">km/h</span>N</p>
-                    <p>Cantidad de vapor de agua en el aire.</p>
+                    <p class="info_widget_pequeño" id="viento_widget_viento">4<span class="medida_widget_pequeño_">km/h</span> N</p>
+                    <p>Velocidad y dirección del viento.</p>
                 </div>
 
                 <div id="widget_precipitaciones">
@@ -200,11 +201,11 @@
                         </div>
                         <div>
                             <article>
-                                <p class="p_ciudad">08:30</p>
+                                <p class="p_ciudad" id="amanecer">08:30</p>
                                 <p class="p_provincia">Amanecer</p>
                             </article>
                             <article>
-                                <p class="p_ciudad">19:50</p>
+                                <p class="p_ciudad" id="atardecer">19:50</p>
                                 <p class="p_provincia">Atardecer</p>
                             </article>
                         </div>
@@ -214,7 +215,7 @@
                     </div>
                 </div>
 
-                <div class="degradado_blanco"></div>
+                <!-- <div class="degradado_blanco"></div> -->
 
             </section>
             <section id="drag_and_drop">
@@ -239,7 +240,53 @@
             </section>
         </div>
         <div id="tercera_seccion">
-            <div id="ajustes"></div>
+            <div id="ajustes">
+                <div id="ajustes_primera_linea">
+                    <h3>Ajustes</h3>
+                    <p><a href="">Cerrar sesión ></a></p>
+                </div>
+                <div id="ajustes_segunda_linea">
+                    <p>APARIENCIA</p>
+                    <div>
+                        <p>Modo oscuro</p>
+                        <form action="">
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
+                        </form>
+                    </div>
+                </div>
+                <div class="separador_ajustes"></div>
+                <div id="ajustes_tercera_linea">
+                    <p>UNIDADES</p>
+                    <div class="medida">
+                        <p>Temperatura</p>
+                        <div class="pill-nav">
+                            <a class="active" href="">ºC</a>
+                            <a href="">ºF</a>
+                        </div>
+                    </div>
+
+                    <div class="medida">
+                        <p>Velocidad viento</p>
+                        <div class="pill-nav">
+                            <a class="active" href="">km/h</a>
+                            <a href="">m/s</a>
+                            <a href="">kn</a>
+                        </div>
+                    </div>
+
+                    <div class="medida">
+                        <p>Precipitaciones</p>
+                        <div class="pill-nav">
+                            <a class="active" href="">mm</a>
+                            <a href="">in</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
             <div id="seccion_grafico">
                 <h3>Gráficos de interés</h3>
                 <form action="">
@@ -269,6 +316,9 @@
     </script>
 
     <script src="mapa.js"></script>
+
+
+
 
 </body>
 

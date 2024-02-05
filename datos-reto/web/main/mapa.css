@@ -65,6 +65,7 @@ h3 {
     box-shadow: 0px 0px 10px rgba(142, 142, 142, 0.5);
     border-radius: 20px;
     padding: 15px;
+    padding-bottom: 20% !important;
 }
 
 /*BUSCADORES*/
@@ -94,36 +95,39 @@ input {
 #ubicaciones_seleccionadas {
     width: 100%;
     margin-top: 20px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     max-height: 300px;
     overflow-y: scroll;
+    position: relative;
+    padding-right: 10px;
 }
 
 /* width */
 #ubicaciones_seleccionadas::-webkit-scrollbar {
     width: 10px;
-    display: none;
+    /* display: none; */
 }
 
 /* Track */
 #ubicaciones_seleccionadas::-webkit-scrollbar-track {
-    /* background-color: #a5a5a542; */
+    background-color: #a5a5a542;
     border-radius: 10px;
 }
 
 /* Handle */
 #ubicaciones_seleccionadas::-webkit-scrollbar-thumb {
-    /* background: #7dcfc4; */
+    background: #28384A;
     border-radius: 10px;
-    box-shadow: inset 0px 0px 3px gray;
+    /* box-shadow: inset 0px 0px 3px gray; */
 }
 
 .card_ubicacion {
     width: 49%;
-    min-width: 375px;
-    max-width: 450px;
+    min-width: 350px;
+    /* max-width: 450px; */
     background: radial-gradient(#ffeec3, #c4e6ff 75%, #d5edff);
     border-radius: 20px;
     display: flex;
@@ -184,16 +188,15 @@ input {
     font-size: 14px;
 }
 
-.degradado_blanco1{
+/* .degradado_blanco1{
     position: absolute;
     background: linear-gradient(rgba(255, 255, 255, 0), #ffffff);
-    width: 100%;
     height: 75px;
     bottom: 0;
     left: 0;
-    width: 40%;
+    width: 120% !important;
     margin-bottom: 20px;
-}
+} */
 
 
 /*SECCION2 ====================================================*/
@@ -229,11 +232,11 @@ input {
 }
 
 #info_principal_datos {
-    width: 40%;
+    width: 52%;
 }
 
 #info_principal_icono {
-    width: 60%;
+    width: 48%;
     display: flex;
     justify-content: flex-end;
 }
@@ -292,14 +295,14 @@ input {
     box-shadow: inset 0px 0px 3px gray;
 }
 
-.degradado_blanco{
+/* .degradado_blanco{
     position: absolute;
     background: linear-gradient(rgba(255, 255, 255, 0), #BAEAFB);
     width: 100%;
     height: 100px;
     bottom: 0;
     left: 0;
-}
+} */
 
 
 /*Prevision por horas*/
@@ -362,7 +365,8 @@ input {
 }
 
 /*Precipitaciones*/
-#widget_precipitaciones, #widget_sol {
+#widget_precipitaciones,
+#widget_sol {
     width: 100%;
     background-color: white;
     padding: 23px;
@@ -371,20 +375,20 @@ input {
 }
 
 /*Sol*/
-#widget_sol{
+#widget_sol {
     display: none;
 }
 
-#widget_sol div div{
+#widget_sol div div {
     display: flex;
     justify-content: space-between;
 }
 
-#widget_sol div div article{
+#widget_sol div div article {
     text-align: center;
 }
 
-#widget_sol div div article .p_ciudad{
+#widget_sol div div article .p_ciudad {
     font-size: 16px;
 }
 
@@ -428,17 +432,158 @@ input {
 #tercera_seccion {
     width: 30%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#ajustes_primera_linea a{
+    text-decoration: none;
+    color: #1A1C29;
 }
 
 #ajustes {
     width: 100%;
-    height: 50%;
+    height: 47%;
     background-color: rgb(242, 242, 242, 0.5);
     backdrop-filter: blur(20deg);
     box-shadow: 0px 0px 10px rgba(142, 142, 142, 0.5);
     border-radius: 20px;
+    padding: 25px;
+    font-weight: 400;
 }
 
+#ajustes #ajustes_primera_linea{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 20px;
+}
+
+#ajustes_segunda_linea div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-left: 10px;
+    padding-right: 20px;
+}
+
+.separador_ajustes{
+    border-bottom: 1px solid rgb(0, 0, 0, 0.25);
+    margin-top: 20px;
+    margin-bottom: 25px;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+#ajustes_tercera_linea div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#ajustes_tercera_linea .medida{
+    margin-top: 10px;
+}
+
+
+/*TOGGLE MODO OSCURO*/
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #28384A;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #ccc;
+}
+/* 
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+} */
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/*PILL NAV*/
+/* Style the links inside the pill navigation menu */
+.pill-nav a {
+    /* display: inline-block; */
+    color: black;
+    text-align: center;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    font-size: 17px;
+    border-radius: 10px;
+    background-color: #ddd;
+    margin: 2px;
+    font-weight: 700;
+  }
+  
+  /* Change the color of links on mouse-over */
+  .pill-nav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  /* Add a color to the active/current link */
+  .pill-nav a.active {
+    background-color: #B0BEC5;
+    color: black;
+  }
+
+
+
+/*GRAFICO*/
 #seccion_grafico {
     width: 100%;
     height: 50%;
@@ -447,25 +592,24 @@ input {
     box-shadow: 0px 0px 10px rgba(142, 142, 142, 0.5);
     border-radius: 20px;
     padding: 20px;
+    /* margin-top: 20px; */
 }
 
-#seccion_grafico form{
+#seccion_grafico form {
     display: flex;
     justify-content: space-between;
     gap: 15px;
     margin-top: 15px;
 }
 
-#seccion_grafico form div{
+#seccion_grafico form div {
     width: 50%;
 }
 
-#seccion_grafico form div input{
+#seccion_grafico form div input {
     border-radius: 10px;
     height: 45px;
     padding: 10px;
     font-family: 'Inter', sans-serif;
     color: gray;
 }
-
-

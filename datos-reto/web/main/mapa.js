@@ -1,6 +1,7 @@
 /*COMPROBAR INICIO DE SESION*/
 window.addEventListener('load', event => {
-    if (localStorage.getItem('token') == null) {
+    // console.log(localStorage.getItem('token'))
+    if ((localStorage.getItem('token') == null) || (localStorage.getItem('token') == '{"message":"Invalid credentials"}')) {
         window.location = "../index.html"
     }
 })
@@ -53,8 +54,6 @@ function cargarDatosAPI() {
 
             });
 
-
-
             mostrarCardStorage()
 
         })
@@ -64,6 +63,36 @@ function cargarDatosAPI() {
 }
 
 cargarDatosAPI()
+
+
+/*ACTUALIZAR DATOS API*/
+setInterval(() => {
+    actualizarDatosAPI()
+}, 15000);
+
+function actualizarDatosAPI() {
+    fetch("http://localhost:8086/api/getData")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("La solicitud no se pudo completar correctamente.");
+            }
+            return response.json();
+        })
+        .then(data => {
+            localizaciones = data[0]
+            datosLocalizaciones = data[1]
+            actualizarDatosUbicacionSeleccionada()
+
+        })
+        .catch(error => {
+            console.error("Error al cargar el archivo:", error);
+        });
+}
+
+function actualizarDatosCards() {
+
+}
+
 
 /*CREAR LAS CARDS*/
 function addCard(localizacion, datos) {
@@ -82,7 +111,7 @@ function addCard(localizacion, datos) {
                     <h3 id="texto_temperatura">${datos.temperature}º</h3>
                 </div>
                 <div id="eliminar" onClick="mostrarCard('${localizacion.name}')">
-                    <img src="../img/iconos/cerrar.svg" alt="" width="30px">
+                    <img src="../img/iconos/cerrar.svg" alt="" width="23px">
                 </div>
             </div>
             <div id="segunda_linea">
@@ -97,6 +126,9 @@ function addCard(localizacion, datos) {
             </div>
         </article>
     `
+    card.addEventListener('click', function () {
+        actualizarDatosUbicacionSeleccionada(localizacion, datos);
+    });
     card.style.display = 'none'
     ubicacionesSeleccionadas.appendChild(card)
 
@@ -139,6 +171,143 @@ function mostrarCardStorage() {
 /*PARA QUE AL MOSTRAR LOS NOMBRES DE LAS CIUDADES TENGAN LA PRIMERA LETRA EN MAYUSCULA*/
 function capitalizeFirstLetter(cadena) {
     return cadena.charAt(0).toUpperCase() + cadena.slice(1);
+}
+
+
+/*ACTUALIZAR DATOS DE UBICACION*/
+function actualizarDatosUbicacionSeleccionada(localizacion, datos) {
+
+    /*ACTUALIZAR FECHA, HORA Y DIA SEMANA*/
+    let contFecha = document.getElementById("fecha")
+
+    let diaSemana = new Date().getDay()
+    let fecha = new Date()
+    let dia = fecha.getDate()
+    let mes = fecha.getMonth()
+    let year = fecha.getFullYear()
+    let hora = new Date().getHours()
+    let minutos = new Date().getMinutes()
+
+
+    // console.log(diaSemana)
+    // console.log(fecha)
+    // console.log(mes)
+    // console.log(hora)
+    // console.log(dia)
+
+    let diaSemanaString = ''
+    let mesString = ''
+
+    switch (diaSemana) {
+        case 1:
+            diaSemanaString = 'Lunes'
+            break;
+        case 2:
+            diaSemanaString = 'Martes'
+            break;
+        case 3:
+            diaSemanaString = 'Miercoles'
+            break;
+        case 4:
+            diaSemanaString = 'Jueves'
+            break;
+        case 5:
+            diaSemanaString = 'Viernes'
+            break;
+        case 6:
+            diaSemanaString = 'Sábado'
+            break;
+        case 7:
+            diaSemanaString = 'Domingo'
+            break;
+        default:
+            break;
+    }
+
+    switch (mes) {
+        case 0:
+            mesString = 'Enero'
+            break;
+        case 1:
+            mesString = 'Febrero'
+            break;
+        case 2:
+            mesString = 'Marzo'
+            break;
+        case 3:
+            mesString = 'Abril'
+            break;
+        case 4:
+            mesString = 'Mayo'
+            break;
+        case 5:
+            mesString = 'Junio'
+            break;
+        case 6:
+            mesString = 'Julio'
+            break;
+        case 7:
+            mesString = 'Agosto'
+            break;
+        case 8:
+            mesString = 'Septiembre'
+            break;
+        case 9:
+            mesString = 'Octubre'
+            break;
+        case 10:
+            mesString = 'Noviembre'
+            break;
+        case 11:
+            mesString = 'Diciembres'
+            break;
+
+        default:
+            break;
+    }
+
+    contFecha.innerHTML = ` <p class="titulo1" id="dia_semana">${diaSemanaString}</p><p><span id="fecha_info">${dia} de ${mesString} ${year}</span> · <span id="hora">${hora}:${minutos}</span></p>`
+
+
+    /*ACTUALIZAR PRIMEROS DATOS*/
+    let contCiudad = document.getElementById("ciudad")
+    let contTemperatura = document.getElementById("info_principal_temperatura")
+    let contDescripcion = document.getElementById("descripcion")
+
+    contCiudad.innerHTML = `${capitalizeFirstLetter(localizacion.name)}`
+    contTemperatura.innerHTML = `${datos.temperature}º`
+    contDescripcion.innerHTML = `${datos.description}`
+
+
+
+    /*ACTUALIZAR WIDGETS*/
+    /* Humedad */
+    let contHumedad = document.getElementById("humedad_widget_humedad")
+    contHumedad.innerHTML = `${datos.humidity}<span class="medida_widget_pequeño_">%</span>`
+
+    /* Viento */
+    let contViento = document.getElementById("viento_widget_viento")
+    contViento.innerHTML = `${datos.wind_speed}<span class="medida_widget_pequeño_">km/h</span> ${datos.wind_direction}`
+
+    /* Amanecer y atardecer */
+    let contAmanecer = document.getElementById("amanecer")
+    let contAtardecer = document.getElementById("atardecer")
+
+    let horaAmanecer = datos.sunrise
+    horaAmanecer = horaAmanecer.split(':')
+    let horaAmanecerCopia = horaAmanecer.slice(0, horaAmanecer.length - 1)
+    horaAmanecer = horaAmanecerCopia.join(':')
+    console.log(horaAmanecer)
+
+    let horaAtardecer = datos.sunset
+    horaAtardecer = horaAtardecer.split(':')
+    let horaAtardecerCopia = horaAtardecer.slice(0, horaAtardecer.length - 1)
+    horaAtardecer = horaAtardecerCopia.join(':')
+    console.log(horaAtardecer)
+
+    contAmanecer.innerHTML = `${horaAmanecer}`
+    contAtardecer.innerHTML = `${horaAtardecer}`
+
 }
 
 

@@ -1,43 +1,60 @@
 version: '3.3'
-
 services:
-  apache: #servidor de apache n.1
-          image: httpd:latest #imagen del contenedor
-          volumes:
-          - ./datos-reto/web/:/usr/local/apache2/htdocs/ #a que documento hace referencia
-          ports: #puertos
-          - "8081:80"
-           
+  apache:
+    #servidor de apache n.1
+    image: httpd:latest #imagen del contenedor
+    volumes:
+      - ./datos-reto/web/:/usr/local/apache2/htdocs/ #a que documento hace referencia
+    ports:
+      #puertos
+      - "8081:80"
   nginx:
-         image: nginx:latest
-         volumes: 
-         - ./datos-reto/nginx.conf:/etc/nginx/nginx.conf #archivo de configuracion para este servidor
-         ports:
-         - "8080:80"
-
+    image: nginx:latest
+    volumes:
+      - ./datos-reto/nginx.conf:/etc/nginx/nginx.conf #archivo de configuracion para este servidor
+    ports:
+      - "8080:80"
   data-feeder:
-      image: docker.io/bitnami/laravel:10
-      ports:
-        - '8085:8000'
-      environment:
-        - DB_HOST=185.60.40.210
-        - DB_PORT=3306
-        - DB_USERNAME=Leire
-        - DB_PASSWORD=12345678
-        - DB_DATABASE=Leire
-      volumes:
-        - './datos-reto/data-feeder:/app'
-      command: ["php", "artisan", "schedule:work"]
-
+    image: docker.io/bitnami/laravel:10
+    ports:
+      - '8085:8000'
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USERNAME=Leire
+      - DB_PASSWORD=12345678
+      - DB_DATABASE=Leire
+    volumes:
+      - './datos-reto/data-feeder:/app'
+    #command: [ "php", "artisan", "schedule:work" ]
   opencast-api:
-      image: docker.io/bitnami/laravel:10
-      ports:
-        - '8086:8000'
-      environment:
-        - DB_HOST=185.60.40.210
-        - DB_PORT=3306
-        - DB_USERNAME=Leire
-        - DB_PASSWORD=12345678
-        - DB_DATABASE=Leire
-      volumes:
-        - './datos-reto/opencast-api:/app'
+    image: docker.io/bitnami/laravel:10
+    ports:
+      - '8086:8000'
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USERNAME=Leire
+      - DB_PASSWORD=12345678
+      - DB_DATABASE=Leire
+    volumes:
+      - './datos-reto/opencast-api:/app'
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: 'Leire'
+      MYSQL_USER: 'Leire'
+      MYSQL_PASSWORD: '12345678'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - "3306:3306"
+    expose:
+      - '3306'
+    volumes:
+      - './datos-reto/mysql/:/var/lib/mysql'
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+      - "8084:80"
+    environment:
+      - PMA_ARBITRARY=1

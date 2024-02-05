@@ -1,9 +1,11 @@
+/*COMPROBAR TOKEN DE INICIO DE SESION*/
 window.addEventListener('load', e => {
-    if(localStorage.getItem('token') !== null) {
-        window.location = "mapa.html"
+    if((localStorage.getItem('token') != null) || (localStorage.getItem('token') != '{"message":"Invalid credentials"}')) {
+        window.location = "main/mapa.html"
     }
 })
 
+/*INICIO DE SESION*/
 const form = document.querySelector('form')
 form.addEventListener('submit', event => {
     event.preventDefault() //si estan mal los datos no recarga la pagina
