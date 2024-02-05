@@ -1,10 +1,10 @@
 /*COMPROBAR INICIO DE SESION*/
-window.addEventListener('load', event => {
-    // console.log(localStorage.getItem('token'))
-    if ((localStorage.getItem('token') == null) || (localStorage.getItem('token') == '{"message":"Invalid credentials"}')) {
-        window.location = "../index.html"
-    }
-})
+// window.addEventListener('load', event => {
+//     // console.log(localStorage.getItem('token'))
+//     if ((localStorage.getItem('token') == null) || (localStorage.getItem('token') == '{"message":"Invalid credentials"}')) {
+//         window.location = "../index.html"
+//     }
+// })
 
 /**/
 let localizacionesString = localStorage.getItem('localizacionesSeleccionadas') || ''
