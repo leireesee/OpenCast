@@ -25,8 +25,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('app:locations-euskalmet-command')->everyFifteenMinutes();
         // $schedule->command('app:location-command')->everyFifteenMinutes();
         
-        // $schedule->command('app:measurement-history-command')->everyFifteenMinutes();
-        // $schedule->command('app:generate-random-data')->everyFifteenSeconds();
+        $schedule->command('app:measurement-history-command')->everyFifteenMinutes();
+        $schedule->command('app:generate-random-data')->everyFifteenSeconds();
     }
 
     /**

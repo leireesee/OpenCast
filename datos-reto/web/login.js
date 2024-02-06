@@ -1,9 +1,9 @@
 /*COMPROBAR TOKEN DE INICIO DE SESION*/
-// window.addEventListener('load', e => {
-//     if((localStorage.getItem('token') != null) || (localStorage.getItem('token') != '{"message":"Invalid credentials"}')) {
-//         window.location = "main/mapa.html"
-//     }
-// })
+window.addEventListener('load', e => {
+    if((localStorage.getItem('token') != null) && (localStorage.getItem('token') != '{"message":"Invalid credentials"}')) {
+        window.location = "main/mapa.html"
+    }
+})
 
 /*INICIO DE SESION*/
 const form = document.querySelector('form')
@@ -38,3 +38,5 @@ form.addEventListener('submit', event => {
             console.error('API error:', error);
         })
 })
+
+

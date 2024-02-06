@@ -1,10 +1,17 @@
 /*COMPROBAR INICIO DE SESION*/
-// window.addEventListener('load', event => {
-//     // console.log(localStorage.getItem('token'))
-//     if ((localStorage.getItem('token') == null) || (localStorage.getItem('token') == '{"message":"Invalid credentials"}')) {
-//         window.location = "../index.html"
-//     }
-// })
+window.addEventListener('load', event => {
+    // console.log(localStorage.getItem('token'))
+    if ((localStorage.getItem('token') == null) || (localStorage.getItem('token') == '{"message":"Invalid credentials"}')) {
+        window.location = "../index.html"
+    }
+})
+
+/*LOGOUT*/
+const logOutBoton = document.getElementById("logout")
+logout.addEventListener('click', e => {
+    localStorage.removeItem('token')
+    window.location = "../index.html"
+})  
 
 /**/
 let localizacionesString = localStorage.getItem('localizacionesSeleccionadas') || ''
@@ -187,7 +194,14 @@ function actualizarDatosUbicacionSeleccionada(localizacion, datos) {
     let year = fecha.getFullYear()
     let hora = new Date().getHours()
     let minutos = new Date().getMinutes()
+    let cadena = '0'
 
+    if (minutos < 10) {
+        minutos = minutos.toString()
+        cadena += minutos
+        minutos = cadena
+        // console.log(minutos)
+    }
 
     // console.log(diaSemana)
     // console.log(fecha)
@@ -297,13 +311,11 @@ function actualizarDatosUbicacionSeleccionada(localizacion, datos) {
     horaAmanecer = horaAmanecer.split(':')
     let horaAmanecerCopia = horaAmanecer.slice(0, horaAmanecer.length - 1)
     horaAmanecer = horaAmanecerCopia.join(':')
-    console.log(horaAmanecer)
 
     let horaAtardecer = datos.sunset
     horaAtardecer = horaAtardecer.split(':')
     let horaAtardecerCopia = horaAtardecer.slice(0, horaAtardecer.length - 1)
     horaAtardecer = horaAtardecerCopia.join(':')
-    console.log(horaAtardecer)
 
     contAmanecer.innerHTML = `${horaAmanecer}`
     contAtardecer.innerHTML = `${horaAtardecer}`
