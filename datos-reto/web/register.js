@@ -18,7 +18,7 @@ form.addEventListener('submit', event => {
         },
         body: JSON.stringify(data)
     }
-    // console.log(config)
+    console.log(config)
     fetch(urlAPI, config)
         .then(response => response.json())
         .then(data => {

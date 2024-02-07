@@ -90,7 +90,19 @@ function actualizarDatosAPI() {
         .then(data => {
             localizaciones = data[0]
             datosLocalizaciones = data[1]
-            actualizarDatosUbicacionSeleccionada()
+
+            // console.log(localizaciones)
+            // console.log(datosLocalizaciones)
+
+            localizaciones.forEach(localizacion => {
+                datosLocalizaciones.forEach(datos => {
+                    if (datos.location_id == localizacion.id) {
+                        actualizarDatosUbicacionSeleccionada(localizacion, datos)
+                        actualizarCards(localizacion, datos)
+                    }
+                })
+
+            });
 
         })
         .catch(error => {
@@ -98,8 +110,33 @@ function actualizarDatosAPI() {
         });
 }
 
-function actualizarDatosCards() {
-
+function actualizarCards(localizacion, datos){
+    let cardActualizar = document.getElementById(`card_${localizacion.name}`)
+    cardActualizar.innerHTML = `
+        <article class="div_icono">
+            <img src="../img/iconos/sol.svg" alt="" id="icono">
+        </article>
+        <article class="div_info">
+            <div id="primera_linea">
+                <div id="temperatura">
+                    <h3 id="texto_temperatura">${datos.temperature}º</h3>
+                </div>
+                <div id="eliminar" onClick="mostrarCard('${localizacion.name}')">
+                    <img src="../img/iconos/cerrar.svg" alt="" width="23px">
+                </div>
+            </div>
+            <div id="segunda_linea">
+                <div id="lugar">
+                    <p>${capitalizeFirstLetter(localizacion.name)}</p>
+                    <p>País Vasco</p>
+                </div>
+                <div id="humedad">
+                    <p>${datos.humidity}%</p>
+                    <p>Humedad</p>
+                </div>
+            </div>
+        </article>
+    `
 }
 
 
@@ -203,14 +240,7 @@ function actualizarDatosUbicacionSeleccionada(localizacion, datos) {
         minutos = minutos.toString()
         cadena += minutos
         minutos = cadena
-        // console.log(minutos)
     }
-
-    // console.log(diaSemana)
-    // console.log(fecha)
-    // console.log(mes)
-    // console.log(hora)
-    // console.log(dia)
 
     let diaSemanaString = ''
     let mesString = ''
@@ -331,6 +361,7 @@ $(document).ready(function () {
     $('.icono_widget').attr('draggable', true);
 
     $(".icono_widget").on("dragstart", function (event) {
+        // console.log(this.id)
         if (this.children.length) {
             event.originalEvent.dataTransfer.setData('text', this.id);
         } else {
@@ -371,6 +402,7 @@ $(document).ready(function () {
         let contWidgets = document.getElementById("div_iconos_drag_and_drop")
 
         if (($('#sol').is(":hidden")) && ($('#lluvias').is(":hidden")) && ($('#viento').is(":hidden"))) {
+            
             contWidgets.innerHTML += '<p id="texto_div_widgets_vacios" style="color: gray; border: 1px dashed gray; font-size: 12px; padding: 15px; border-radius: 12px; width: 100%">Arrastra los elementos de vuelta para eliminar.</p>'
         }
 
@@ -417,7 +449,7 @@ $(document).ready(function () {
     $("#div_iconos_drag_and_drop").on("drop", function (event) {
         event.preventDefault();
         const id_widget = event.originalEvent.dataTransfer.getData('text')
-        console.log(id_widget)
+        // console.log(id_widget)
         switch (id_widget) {
             case "widget_sol":
                 $('#sol').show()
@@ -439,7 +471,6 @@ $(document).ready(function () {
         }
 
         let contPWidgets = document.getElementById("texto_div_widgets_vacios")
-
         contPWidgets.style.display = "none"
 
     });

@@ -19,7 +19,7 @@ class MeasurementHistoryController extends Controller
         foreach ($locations_data as $location){
             $measurement_data = MeasurementHistory::where(
                 'location_id', '=', $location['id'] 
-            )->orderBy('date', 'desc')->first();
+            )->orderBy('date', 'desc')->orderBy('hour', 'desc')->first();
             array_push($data,$measurement_data);
         }
 

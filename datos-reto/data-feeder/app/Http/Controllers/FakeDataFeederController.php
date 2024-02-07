@@ -85,7 +85,7 @@ class FakeDataFeederController extends Controller
         foreach ($locations_data as $location){
             $measurement_data = MeasurementHistory::where(
                 'location_id', '=', $location['id'] 
-            )->orderBy('date', 'desc')->first();
+            )->orderBy('date', 'desc')->orderBy('hour', 'desc')->first();
             array_push($data,$measurement_data);
         }
 
@@ -98,11 +98,15 @@ class FakeDataFeederController extends Controller
                 $cont = -1;
             }
 
+            $temperaturaActual = $dato->temperatura;
+            $tempMax = $dato->max_temperatura;
+            $tempMin = $dato->min_temperatura;
+
             //generar las temperaturas segun temp maxima y temp minima
-            if($dato->temperatura + 1 > $dato->max_temperatura){
-                $dato->temperatura = $dato->temperatura - 1;
-            } else if ($dato->temperatura - 1 < $dato->min_temperatura) {
-                $dato->temperatura = $dato->temperatura + 1;
+            if($temperaturaActual + 1 > $tempMax){
+                $fakeTemperature = $temperaturaActual - 1;
+            } else if ($temperaturaActual - 1 < $tempMin) {
+                $fakeTemperature = $temperaturaActual + 1;
             }            
 
             //insertamos en la base de datos los datos inventados
@@ -111,7 +115,7 @@ class FakeDataFeederController extends Controller
                 'description' => $dato->description,
                 'date'=> Carbon::now('GMT+1')->toDateString(),
                 'hour'=> Carbon::now('GMT+1')->toTimeString(),
-                'temperature' => $dato->temperature,
+                'temperature' => $fakeTemperature,
                 'max_temperature' => $dato->max_temperature,
                 'min_temperature' => $dato->min_temperature,
                 'humidity'=> $dato->humidity +($dato->humidity == 0 ? 1:$cont),
