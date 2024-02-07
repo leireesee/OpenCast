@@ -220,7 +220,7 @@
 
             </section>
             <section id="drag_and_drop">
-                <div>
+                <div id="div_iconos_drag_and_drop">
                     <article class="icono_widget" id="viento">
                         <img src="../img/iconos/viento.png" alt="" draggable="false">
                         <p>Viento</p>
@@ -293,15 +293,15 @@
                 <form action="">
                     <div>
                         <label for="">Fecha inicio:</label>
-                        <input type="date">
+                        <input type="date" onchange="controlFechaMaximaMinima('ini')" id="fecha_ini">
                     </div>
                     <div>
                         <label for="">Fecha fin:</label>
-                        <input type="date">
+                        <input type="date" onchange="controlFechaMaximaMinima('fin')" id="fecha_fin">
                     </div>
                 </form>
                 <div>
-                    <canvas id="grafico" width="200px" height="150px"></canvas>
+                    <canvas id="grafico" width="400px" height="300px"></canvas>
                 </div>
             </div>
 

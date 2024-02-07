@@ -272,7 +272,7 @@ input {
     max-height: 500px;
     overflow-y: scroll;
     margin-top: 30px;
-    padding-bottom: 10px;
+    padding-bottom: 30px;
     border-radius: 20px;
 }
 
@@ -352,7 +352,7 @@ input {
 
 .info_widget_pequeño {
     font-weight: 700;
-    font-size: 40px;
+    font-size: 35px;
 }
 
 .info_widget_pequeño span {
@@ -424,7 +424,13 @@ input {
 }
 
 #drag_and_drop article img {
-    width: 40px;
+    width: 20px;
+}
+
+.icono_widget{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 
@@ -556,8 +562,12 @@ input:checked+.slider:before {
 
 /*PILL NAV*/
 /* Style the links inside the pill navigation menu */
+.pill-nav{
+    width: 55%;
+}
+
 .pill-nav a {
-    /* display: inline-block; */
+    display: inline-block;
     color: black;
     text-align: center;
     padding: 10px 20px 10px 20px;
@@ -567,6 +577,7 @@ input:checked+.slider:before {
     background-color: #ddd;
     margin: 2px;
     font-weight: 700;
+    flex: 2 1 auto;
   }
   
   /* Change the color of links on mouse-over */

@@ -6,12 +6,14 @@ window.addEventListener('load', event => {
     }
 })
 
+
 /*LOGOUT*/
 const logOutBoton = document.getElementById("logout")
 logout.addEventListener('click', e => {
     localStorage.removeItem('token')
     window.location = "../index.html"
-})  
+})
+
 
 /**/
 let localizacionesString = localStorage.getItem('localizacionesSeleccionadas') || ''
@@ -134,7 +136,8 @@ function addCard(localizacion, datos) {
         </article>
     `
     card.addEventListener('click', function () {
-        actualizarDatosUbicacionSeleccionada(localizacion, datos);
+        actualizarDatosUbicacionSeleccionada(localizacion, datos)
+        cargarGrafico(localizacion, datos)
     });
     card.style.display = 'none'
     ubicacionesSeleccionadas.appendChild(card)
@@ -325,7 +328,6 @@ function actualizarDatosUbicacionSeleccionada(localizacion, datos) {
 
 /*DRAG AND DROP*/
 $(document).ready(function () {
-
     $('.icono_widget').attr('draggable', true);
 
     $(".icono_widget").on("dragstart", function (event) {
@@ -334,12 +336,12 @@ $(document).ready(function () {
         } else {
             event.preventDefault();
         }
-        //console.log(this.id);
+        // console.log(this.id);
     });
 
     $("#widgets").on("dragover", function (event) {
+        // console.log(this.id);
         event.preventDefault();
-        console.log(this.id);
     })
 
     $("#widgets").on("drop", function (event) {
@@ -365,7 +367,162 @@ $(document).ready(function () {
             default:
                 break;
         }
+
+        let contWidgets = document.getElementById("div_iconos_drag_and_drop")
+
+        if (($('#sol').is(":hidden")) && ($('#lluvias').is(":hidden")) && ($('#viento').is(":hidden"))) {
+            contWidgets.innerHTML += '<p id="texto_div_widgets_vacios" style="color: gray; border: 1px dashed gray; font-size: 12px; padding: 15px; border-radius: 12px; width: 100%">Arrastra los elementos de vuelta para eliminar.</p>'
+        }
+
     });
+
+
+    /*DRAG AND DROP DE VUELTA*/
+    $('#widget_viento').attr('draggable', true);
+    $('#widget_precipitaciones').attr('draggable', true);
+    $('#widget_sol').attr('draggable', true);
+
+    $("#widget_viento").on("dragstart", function (event) {
+        if (this.children.length) {
+            event.originalEvent.dataTransfer.setData('text', this.id);
+        } else {
+            event.preventDefault();
+        }
+        // console.log(this.id);
+    });
+
+    $("#widget_precipitaciones").on("dragstart", function (event) {
+        if (this.children.length) {
+            event.originalEvent.dataTransfer.setData('text', this.id);
+        } else {
+            event.preventDefault();
+        }
+        // console.log(this.id);
+    });
+
+    $("#widget_sol").on("dragstart", function (event) {
+        if (this.children.length) {
+            event.originalEvent.dataTransfer.setData('text', this.id);
+        } else {
+            event.preventDefault();
+        }
+        // console.log(this.id);
+    });
+
+    $("#div_iconos_drag_and_drop").on("dragover", function (event) {
+        // console.log(this.id);
+        event.preventDefault();
+    })
+
+    $("#div_iconos_drag_and_drop").on("drop", function (event) {
+        event.preventDefault();
+        const id_widget = event.originalEvent.dataTransfer.getData('text')
+        console.log(id_widget)
+        switch (id_widget) {
+            case "widget_sol":
+                $('#sol').show()
+                $('#widget_sol').hide()
+                break;
+
+            case "widget_precipitaciones":
+                $('#lluvias').show()
+                $('#widget_precipitaciones').hide()
+                break;
+
+            case "widget_viento":
+                $('#viento').show()
+                $('#widget_viento').hide()
+                break;
+
+            default:
+                break;
+        }
+
+        let contPWidgets = document.getElementById("texto_div_widgets_vacios")
+
+        contPWidgets.style.display = "none"
+
+    });
+
 
 });
 
+
+/*CARGAR GRAFICO*/
+function cargarGrafico() {
+
+    const ctx = document.getElementById('grafico');
+    // console.log()
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [1, 2, 3],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+
+/*CONTROLAR FORM DE FECHAS PARA GRAFICO*/
+function controlFechaMaximaMinima(cadena) {
+
+    let fechaIniString = document.getElementById("fecha_ini")
+    let fechaFinString = document.getElementById("fecha_fin")
+
+    /*CONTROL DE FECHA FIN MAXIMA LA FECHA DE HOY*/
+    let fechaActual = new Date()
+    let fechaFinDate = new Date(fechaFinString.value)
+
+    /*CONTROL DE SELECCION DE MAXIMO 1 SEMANA*/
+    if (cadena == 'ini') {
+        /*creo la fecha a partir de la fecha de inicio*/
+        let fechaIniDate = new Date(fechaIniString.value)
+
+        /*especifico que la fecha fin minima es la fecha inicio*/
+        fechaFinString.min = fechaIniDate.toISOString().split('T')[0]
+
+        /*sumo a la fecha de inicio 6 dias*/
+        fechaIniDate.setDate(fechaIniDate.getDate() + 6)
+
+        /*especifico que la fecha fin maxima es la fecha inicio + 6*/
+        fechaFinString.max = fechaIniDate.toISOString().split('T')[0]
+
+
+    } else if (cadena == 'fin') {
+        /*creo la fecha a partir de la fecha de fin*/
+        let fechaFinDate = new Date(fechaFinString.value)
+
+        /*especifico que la fecha ini maxima es la fecha fin*/
+        fechaIniString.max = fechaFinDate.toISOString().split('T')[0]
+
+        /*resto a la fecha de fin 6 dias*/
+        fechaFinDate.setDate(fechaFinDate.getDate() - 6)
+
+        /*especifico que la fecha ini minima es la fecha inicio - 6*/
+        fechaIniString.min = fechaFinDate.toISOString().split('T')[0]
+    }
+
+
+    // let fechaIni = document.getElementById("fecha_ini")
+    // // console.log(fechaIni)
+    // // console.log(fechaFin)
+    // let fechaIniDate = new Date(fechaIni.value)
+    // let fechaFinDate = new Date(fechaFin.value)
+    // // fechaIniDate.setDate(fechaIniDate.getDate() + 7)
+    // fechaIni.max = fechaFinDate.toISOString().split('T')[0]
+    // fechaFinDate.setDate(fechaFinDate.getDate() - 7)
+    // fechaIni.min = fechaFinDate.toISOString().split('T')[0]
+
+    // fechaFin.min = fechaIniDate.toISOString().split('T')[0]
+}
