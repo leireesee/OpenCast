@@ -33,27 +33,39 @@
     <!-- Script Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <!-- Script para la ip del ordenador -->
+    <script src="ip.js"></script>
 </head>
 
 <script>
-    $(function () {
-        $(document).tooltip({
-            position: { my: "bottom-13", at: "top" },
-            content: "<div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'><article><p style='font-size: 14px; font-weight: 400'>Mañana:</p><p style='font-size: 40px; font-weight: 600; line-height: 37px; margin-top: 5px'>30º</p><p style='font-weight: 200; font-size: 13px'>Soleado</p></article><article><img src='../img/iconos/sol.svg' width='60px' style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'></article></div><img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>"
-        });
-    });
+    // $(function () {
+    //     $(document).tooltip({
+    //         classes: {
+    //             "ui-tooltip": "balizas"
+    //         },
+    //         position: { my: "bottom-13", at: "top" },
+    //         content: "<div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'><article><p style='font-size: 14px; font-weight: 400'>Mañana:</p><p style='font-size: 40px; font-weight: 600; line-height: 37px; margin-top: 5px'>30º</p><p style='font-weight: 200; font-size: 13px'>Soleado</p></article><article><img src='../img/iconos/sol.svg' width='60px' style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'></article></div><img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>"
+    //     });
+
+    // });
+
+
 </script>
 
 <style>
-    .ui-tooltip {
+    .balizas {
         width: 170px;
         background-color: #28384A;
-        color: white;
+        color: white; 
         border: none !important;
         box-shadow: none;
         border-radius: 10px;
         font-family: 'Inter', sans-serif;
         padding: 13px;
+    }
+
+    .drag_and_drop_tooltip{
+
     }
 </style>
 
@@ -168,7 +180,8 @@
                         <!-- icono -->
                         <img src="" alt="">
                     </div>
-                    <p class="info_widget_pequeño" id="humedad_widget_humedad">80<span class="medida_widget_pequeño_">%</span></p>
+                    <p class="info_widget_pequeño" id="humedad_widget_humedad">80<span
+                            class="medida_widget_pequeño_">%</span></p>
                     <p>Cantidad de vapor de agua en el aire.</p>
                 </div>
 
@@ -178,7 +191,8 @@
                         <!-- icono -->
                         <img src="" alt="">
                     </div>
-                    <p class="info_widget_pequeño" id="viento_widget_viento">4<span class="medida_widget_pequeño_">km/h</span> N</p>
+                    <p class="info_widget_pequeño" id="viento_widget_viento">4<span
+                            class="medida_widget_pequeño_">km/h</span> N</p>
                     <p>Velocidad y dirección del viento.</p>
                 </div>
 
@@ -237,7 +251,7 @@
                         <!-- <p>1x2</p> -->
                     </article>
                 </div>
-                
+                <div id="div_iconos_drag_and_drop_parrafo"></div>
             </section>
         </div>
         <div id="tercera_seccion">

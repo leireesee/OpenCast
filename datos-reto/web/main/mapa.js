@@ -6,6 +6,7 @@ window.addEventListener('load', event => {
     }
 })
 
+let ciudadMostrada = ''
 
 /*LOGOUT*/
 const logOutBoton = document.getElementById("logout")
@@ -19,13 +20,14 @@ logout.addEventListener('click', e => {
 let localizacionesString = localStorage.getItem('localizacionesSeleccionadas') || ''
 
 
+
 /*CARGAR DATOS DE LAS LOCALIZACIONES*/
 let localizaciones = []
 let datosLocalizaciones = []
 
 function cargarDatosAPI() {
 
-    fetch("http://localhost:8086/api/getData")
+    fetch('http://'+urlActual+':8086/api/getData')
         .then(response => {
             if (!response.ok) {
                 throw new Error("La solicitud no se pudo completar correctamente.");
@@ -39,6 +41,7 @@ function cargarDatosAPI() {
             // console.log(datosLocalizaciones)
 
             localizaciones.forEach(localizacion => {
+                cargarDatosTooltip(localizacion)
 
                 var myIcon = L.icon({
                     iconUrl: '../img/iconos/icono_baliza_roja.svg',
@@ -60,7 +63,6 @@ function cargarDatosAPI() {
                         addCard(localizacion, datos)
                     }
                 })
-
             });
 
             mostrarCardStorage()
@@ -80,7 +82,7 @@ setInterval(() => {
 }, 15000);
 
 function actualizarDatosAPI() {
-    fetch("http://localhost:8086/api/getData")
+    fetch('http://'+urlActual+':8086/api/getData')
         .then(response => {
             if (!response.ok) {
                 throw new Error("La solicitud no se pudo completar correctamente.");
@@ -96,10 +98,19 @@ function actualizarDatosAPI() {
 
             localizaciones.forEach(localizacion => {
                 datosLocalizaciones.forEach(datos => {
+                    let card = document.getElementById(`card_${localizacion.name}`)
+
                     if (datos.location_id == localizacion.id) {
-                        actualizarDatosUbicacionSeleccionada(localizacion, datos)
+                        card.addEventListener('click', function () {
+                            actualizarDatosUbicacionSeleccionada(localizacion, datos)
+                            cargarGrafico(localizacion, datos)
+                        });
+                        if (ciudadMostrada == localizacion.name) {
+                            actualizarDatosUbicacionSeleccionada(localizacion, datos)
+                        }
                         actualizarCards(localizacion, datos)
                     }
+                    /*ejecutamos la funcion del tooltip*/
                 })
 
             });
@@ -110,7 +121,9 @@ function actualizarDatosAPI() {
         });
 }
 
-function actualizarCards(localizacion, datos){
+// cargarDatosTooltip()
+
+function actualizarCards(localizacion, datos) {
     let cardActualizar = document.getElementById(`card_${localizacion.name}`)
     cardActualizar.innerHTML = `
         <article class="div_icono">
@@ -181,6 +194,7 @@ function addCard(localizacion, datos) {
 
 }
 
+
 /*MOSTRAR/OCULTAR LAS CARDS SELECCIONADAS Y GUARDAR/QUITAR EN LOCAL STORAGE*/
 function mostrarCard(localizacion) {
 
@@ -218,6 +232,209 @@ function mostrarCardStorage() {
 /*PARA QUE AL MOSTRAR LOS NOMBRES DE LAS CIUDADES TENGAN LA PRIMERA LETRA EN MAYUSCULA*/
 function capitalizeFirstLetter(cadena) {
     return cadena.charAt(0).toUpperCase() + cadena.slice(1);
+}
+
+
+/*TOOLTIP*/
+function cargarDatosTooltip(localizacion) {
+
+    console.log(localizacion)
+
+    let fechaActual = new Date()
+    let fechaManana = new Date()
+    fechaManana.setDate(parseInt(fechaActual.getDate()) + 1)
+
+    let fechaActualSeparada = fechaActual.toISOString().split('T')[0].split('-').join("/")
+    let fechaMananaSeparada = fechaManana.toISOString().split('T')[0].split('-').join('')
+
+    console.log(fechaActualSeparada)
+    console.log(fechaMananaSeparada)
+
+    let fromDate = new Date().toString();
+    let toDate = new Date() + 1;
+
+    const token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJtZXQwMS5hcGlrZXkiLCJpc3MiOiJJRVMgUExBSUFVTkRJIEJISSBJUlVOIiwiZXhwIjoyMjM4MTMxMDAyLCJ2ZXJzaW9uIjoiMS4wLjAiLCJpYXQiOjE2Mzk3NDc5MDcsImVtYWlsIjoiaWtjZmNAcGxhaWF1bmRpLm5ldCJ9.PwlkDxwtidWSjLo81yRgf6vITaU5yGDH1TgXAVf5Ijl07Bz8auOyQX3uMGiC8GhGiHHymNDBK1IoM3C1aeasdGngQsAMoS9jbiGNGNOhb9JthJnY778zPBxZ6EzlnZEuDFRDGZCRbB4IkyzQk677rP3Nt0v5GPU8g2F4uacpTCWwj0k_fQsCCfhNY89ECGV1pFMwJc_9m7Rezzxd6IMxLyir7MgaWWRGvGb1kH4XqBV_roBBSIO70j4P-p0udoZIuRKWrDZexrSeX9G_brJJplwzoI2eo8mQVX3u3uzn-9E2iystKe0IS3k6uLYiHnNuPQnCkIBUg3JAhu_q9V8iIg';
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    };
+
+    switch (localizacion.name) {
+        case 'gasteiz':
+            const url = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/vitoria_gasteiz/locations/${location.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
+
+            fetch(url, options)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+
+                    $(function () {
+                        $(document).tooltip({
+                            classes: {
+                                "ui-tooltip": "balizas"
+                            },
+                            position: { my: "bottom-13", at: "top" },
+                            content: `<div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'><article><p style='font-size: 14px; font-weight: 400'>Mañana:</p><p style='font-size: 40px; font-weight: 600; line-height: 37px; margin-top: 5px'>30º</p><p style='font-weight: 200; font-size: 13px'>Soleado</p></article><article><img src='../img/iconos/sol.svg' width='60px' style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'></article></div><img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>`
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+            break;
+
+        case 'bilbao':
+            const url2 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/vitoria_gasteiz/locations/${location.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
+
+            fetch(url2, options)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+
+                    $(function () {
+                        $(document).tooltip({
+                            classes: {
+                                "ui-tooltip": "balizas"
+                            },
+                            position: { my: "bottom-13", at: "top" },
+                            content: `<div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'><article><p style='font-size: 14px; font-weight: 400'>Mañana:</p><p style='font-size: 40px; font-weight: 600; line-height: 37px; margin-top: 5px'>30º</p><p style='font-weight: 200; font-size: 13px'>Soleado</p></article><article><img src='../img/iconos/sol.svg' width='60px' style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'></article></div><img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>`
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+            break;
+
+        case 'donostia':
+            const url3 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/vitoria_gasteiz/locations/${location.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
+
+            fetch(url3, options)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+
+                    $(function () {
+                        $(document).tooltip({
+                            classes: {
+                                "ui-tooltip": "balizas"
+                            },
+                            position: { my: "bottom-13", at: "top" },
+                            content: `<div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'><article><p style='font-size: 14px; font-weight: 400'>Mañana:</p><p style='font-size: 40px; font-weight: 600; line-height: 37px; margin-top: 5px'>30º</p><p style='font-weight: 200; font-size: 13px'>Soleado</p></article><article><img src='../img/iconos/sol.svg' width='60px' style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'></article></div><img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>`
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+            break;
+
+        case 'hondarribia':
+            const url4 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/vitoria_gasteiz/locations/${location.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
+
+            fetch(url4, options)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+
+                    $(function () {
+                        $(document).tooltip({
+                            classes: {
+                                "ui-tooltip": "balizas"
+                            },
+                            position: { my: "bottom-13", at: "top" },
+                            content: `<div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'><article><p style='font-size: 14px; font-weight: 400'>Mañana:</p><p style='font-size: 40px; font-weight: 600; line-height: 37px; margin-top: 5px'>30º</p><p style='font-weight: 200; font-size: 13px'>Soleado</p></article><article><img src='../img/iconos/sol.svg' width='60px' style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'></article></div><img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>`
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+            break;
+
+        case 'irun':
+            const url5 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/vitoria_gasteiz/locations/${location.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
+
+            fetch(url5, options)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+
+                    $(function () {
+                        $(document).tooltip({
+                            classes: {
+                                "ui-tooltip": "balizas"
+                            },
+                            position: { my: "bottom-13", at: "top" },
+                            content: `<div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'><article><p style='font-size: 14px; font-weight: 400'>Mañana:</p><p style='font-size: 40px; font-weight: 600; line-height: 37px; margin-top: 5px'>30º</p><p style='font-weight: 200; font-size: 13px'>Soleado</p></article><article><img src='../img/iconos/sol.svg' width='60px' style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'></article></div><img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>`
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+            break;
+
+        case 'oiartzun':
+            const url6 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/vitoria_gasteiz/locations/${location.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
+
+            fetch(url6, options)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+
+                    $(function () {
+                        $(document).tooltip({
+                            classes: {
+                                "ui-tooltip": "balizas"
+                            },
+                            position: { my: "bottom-13", at: "top" },
+                            content: `<div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'><article><p style='font-size: 14px; font-weight: 400'>Mañana:</p><p style='font-size: 40px; font-weight: 600; line-height: 37px; margin-top: 5px'>30º</p><p style='font-weight: 200; font-size: 13px'>Soleado</p></article><article><img src='../img/iconos/sol.svg' width='60px' style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'></article></div><img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>`
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+            break;
+
+        default:
+            break;
+    }
+
 }
 
 
@@ -353,6 +570,8 @@ function actualizarDatosUbicacionSeleccionada(localizacion, datos) {
     contAmanecer.innerHTML = `${horaAmanecer}`
     contAtardecer.innerHTML = `${horaAtardecer}`
 
+    ciudadMostrada = `${localizacion.name}`
+
 }
 
 
@@ -402,10 +621,15 @@ $(document).ready(function () {
         let contWidgets = document.getElementById("div_iconos_drag_and_drop")
 
         if (($('#sol').is(":hidden")) && ($('#lluvias').is(":hidden")) && ($('#viento').is(":hidden"))) {
-            
-            contWidgets.innerHTML += '<p id="texto_div_widgets_vacios" style="color: gray; border: 1px dashed gray; font-size: 12px; padding: 15px; border-radius: 12px; width: 100%">Arrastra los elementos de vuelta para eliminar.</p>'
-        }
 
+            // contWidgets.innerHTML += '<p id="div_iconos_drag_and_drop_parrafo_p" style="color: gray; border: 1px dashed gray; font-size: 12px; padding: 15px; border-radius: 12px; width: 100%">Arrastra los elementos de vuelta para eliminar.</p>'
+            // contWidgets.css.content += '<p id="div_iconos_drag_and_drop_parrafo_p" style="color: gray; border: 1px dashed gray; font-size: 12px; padding: 15px; border-radius: 12px; width: 100%">Arrastra los elementos de vuelta para eliminar.</p>'
+            let p = document.createElement('p')
+            p.id = "text"
+            p.innerHTML = "Arrastra los elementos de vuelta para eliminar."
+            contWidgets.append(p);
+            console.log(contWidgets)
+        }
     });
 
 
@@ -444,10 +668,23 @@ $(document).ready(function () {
     $("#div_iconos_drag_and_drop").on("dragover", function (event) {
         // console.log(this.id);
         event.preventDefault();
+
     })
 
     $("#div_iconos_drag_and_drop").on("drop", function (event) {
         event.preventDefault();
+        let contWidgets = document.getElementById("div_iconos_drag_and_drop")
+        console.log(document.getElementById('text'))
+        if (document.getElementById('text') == null) {
+            contWidgets.removeChild(document.getElementById('text'))
+        }
+        let contWidgetsParrafo = document.getElementById("div_iconos_drag_and_drop_parrafo")
+
+
+        if (contWidgets.lastChild.id == 'text') {
+            contWidgetsParrafo.removeChild(contWidgets.lastChild)
+        }
+
         const id_widget = event.originalEvent.dataTransfer.getData('text')
         // console.log(id_widget)
         switch (id_widget) {
@@ -470,8 +707,16 @@ $(document).ready(function () {
                 break;
         }
 
-        let contPWidgets = document.getElementById("texto_div_widgets_vacios")
-        contPWidgets.style.display = "none"
+
+        // let contPWidgets = document.getElementById("texto_div_widgets_vacios")
+        // contPWidgets.style.display = "none"
+
+        // let contWidgets = document.getElementById("div_iconos_drag_and_drop_parrafo")
+
+        // if (($('#sol').is(":visible")) || ($('#lluvias').is(":visible")) || ($('#viento').is(":visible"))) {
+
+        //     contWidgets.innerHTML = ''
+        // }
 
     });
 

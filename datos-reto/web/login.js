@@ -10,8 +10,8 @@ const form = document.querySelector('form')
 form.addEventListener('submit', event => {
     event.preventDefault() //si estan mal los datos no recarga la pagina
 
-    const urlAPI = 'http://localhost:8086/api/login'
-
+    const urlAPI = 'http://'+urlActual+':8086/api/login'
+    console.log(urlAPI)
     const data = {
         email: document.getElementById('email').value,
         password: document.getElementById('password').value
@@ -24,7 +24,7 @@ form.addEventListener('submit', event => {
         },
         body: JSON.stringify(data)
     }
-
+    console.log(config)
     fetch(urlAPI, config)
         .then(response => response.json())
         .then(data => {
