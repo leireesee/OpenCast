@@ -63,10 +63,6 @@
         font-family: 'Inter', sans-serif;
         padding: 13px;
     }
-
-    .drag_and_drop_tooltip{
-
-    }
 </style>
 
 
@@ -107,20 +103,20 @@
             <div id="info_principal">
                 <article id="info_principal_datos">
                     <div id="info_principal_fila1">
-                        <p class="p_ciudad" id="ciudad">Irún</p>
-                        <p class="p_provincia">País Vasco</p>
+                        <p class="p_ciudad" id="ciudad"></p>
+                        <p class="p_provincia" id="provincia"></p>
                     </div>
-                    <h3 id="info_principal_temperatura">30º</h3>
-                    <p id="descripcion" class="p_ciudad">Soleado</p>
+                    <h3 id="info_principal_temperatura"></h3>
+                    <p id="descripcion" class="p_ciudad"></p>
                 </article>
                 <article id="info_principal_icono">
-                    <img src="../img/iconos/sol.svg" alt="">
+                    <img id="icono_tiempo_ubicacion_seleccionada" src="" alt="">
                 </article>
             </div>
 
             <!-- WIDGETS -->
             <section id="widgets">
-                <div id="widget_prevision_por_horas">
+                <div id="widget_prevision_por_horas" style="display: none;">
                     <h5 class="titulo_widget">Previsión por horas</h5>
                     <div>
                         <!-- HORA -->
@@ -174,7 +170,7 @@
                     </div>
                 </div>
 
-                <div id="widget_humedad">
+                <div id="widget_humedad" style="display: none;">
                     <div>
                         <h5 class="titulo_widget">Humedad</h5>
                         <!-- icono -->
@@ -233,7 +229,7 @@
                 <!-- <div class="degradado_blanco"></div> -->
 
             </section>
-            <section id="drag_and_drop">
+            <section id="drag_and_drop" style="display: none;">
                 <div id="div_iconos_drag_and_drop">
                     <article class="icono_widget" id="viento">
                         <img src="../img/iconos/viento.png" alt="" draggable="false">
@@ -314,8 +310,8 @@
                         <input type="date" onchange="controlFechaMaximaMinima('fin')" id="fecha_fin">
                     </div>
                 </form>
-                <div>
-                    <canvas id="grafico" width="400px" height="300px"></canvas>
+                <div id="contenedor_grafico">
+                    <canvas id="grafico"></canvas>
                 </div>
             </div>
 

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_2" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 175.63 130.33">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#radial-gradient);
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient-2);
+        filter: url(#drop-shadow-2);
+      }
+
+      .cls-3 {
+        fill: url(#linear-gradient);
+        filter: url(#outer-glow-1);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="799.77" y1="-405.63" x2="856.02" y2="-405.63" gradientTransform="translate(-756.96 -266.12) rotate(46.35)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fabb41"/>
+      <stop offset=".24" stop-color="#f9b43c"/>
+      <stop offset=".57" stop-color="#f8a330"/>
+      <stop offset=".95" stop-color="#f7861d"/>
+      <stop offset="1" stop-color="#f7821a"/>
+    </linearGradient>
+    <filter id="outer-glow-1" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur" stdDeviation="7"/>
+      <feFlood flood-color="#fabb41" flood-opacity=".34"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient-2" x1="505.77" y1="-26.42" x2="565.28" y2="-26.42" gradientTransform="translate(-386.66 -128.21) rotate(23.41)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset=".05" stop-color="#fffbf5"/>
+      <stop offset=".22" stop-color="#fff1d3"/>
+      <stop offset=".4" stop-color="#ffe9ba"/>
+      <stop offset=".59" stop-color="#ffe3a7"/>
+      <stop offset=".79" stop-color="#ffe09c"/>
+      <stop offset="1" stop-color="#ffdf99"/>
+    </linearGradient>
+    <filter id="drop-shadow-2" filterUnits="userSpaceOnUse">
+      <feOffset dx="2" dy="1"/>
+      <feGaussianBlur result="blur-2" stdDeviation="5"/>
+      <feFlood flood-color="#3d2709" flood-opacity=".32"/>
+      <feComposite in2="blur-2" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <radialGradient id="radial-gradient" cx="52.46" cy="78.1" fx="32.18" fy="78.1" r="84.07" gradientUnits="userSpaceOnUse">
+      <stop offset=".16" stop-color="#fefefe"/>
+      <stop offset=".43" stop-color="#fbfbfb"/>
+      <stop offset=".62" stop-color="#f4f3f1"/>
+      <stop offset=".79" stop-color="#e8e5e2"/>
+      <stop offset=".95" stop-color="#d8d2cc"/>
+      <stop offset="1" stop-color="#d1cbc3"/>
+    </radialGradient>
+  </defs>
+  <g id="Icons">
+    <g>
+      <g>
+        <polygon class="cls-3" points="112.53 98.78 102.41 88.7 88.18 87.49 86.91 73.26 76.79 63.19 84.96 51.47 83.68 37.24 97.47 33.52 105.64 21.8 118.59 27.81 132.38 24.09 138.45 37.02 151.4 43.03 147.73 56.83 153.8 69.76 142.11 77.98 138.45 91.78 124.22 90.57 112.53 98.78"/>
+        <circle class="cls-2" cx="115.27" cy="60.35" r="29.75"/>
+      </g>
+      <path class="cls-1" d="M126.93,85.04c.28-1.43,.43-2.91,.43-4.43,0-12.71-10.3-23.01-23.01-23.01-2.33,0-4.57,.35-6.69,.99-5.63-12.53-18.21-21.27-32.85-21.27-19.34,0-35.11,15.25-35.96,34.37-15.98,.25-28.86,13.27-28.86,29.31s12.29,28.46,27.75,29.28c.21,.03,.43,.04,.65,.04H125.07s.04,0,.06,0c.04,0,.08,0,.11,0,12.52,0,22.68-10.15,22.68-22.68s-9.25-21.74-20.99-22.61Z"/>
+    </g>
+  </g>
+</svg>

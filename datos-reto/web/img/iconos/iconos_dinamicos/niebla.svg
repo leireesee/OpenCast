@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_2" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 135 66">
+  <defs>
+    <style>
+      .cls-1 {
+        stroke: url(#linear-gradient-7);
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7 {
+        fill: none;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 6px;
+      }
+
+      .cls-2 {
+        stroke: url(#linear-gradient);
+      }
+
+      .cls-3 {
+        stroke: url(#linear-gradient-5);
+      }
+
+      .cls-4 {
+        stroke: url(#linear-gradient-3);
+      }
+
+      .cls-5 {
+        stroke: url(#linear-gradient-2);
+      }
+
+      .cls-6 {
+        stroke: url(#linear-gradient-4);
+      }
+
+      .cls-7 {
+        stroke: url(#linear-gradient-6);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="14" y1="3" x2="118" y2="3" gradientUnits="userSpaceOnUse">
+      <stop offset=".16" stop-color="#d1cbc3"/>
+      <stop offset=".45" stop-color="#c7c1b9"/>
+      <stop offset=".95" stop-color="#aca69f"/>
+      <stop offset="1" stop-color="#aaa49d"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" y1="63" x2="123" y2="63" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-3" y1="33" x2="131" y2="33" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-4" x1="0" y1="18" x2="36" y2="18" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-5" x1="45" y1="18" x2="134" y2="18" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-6" x1="104" y1="48" x2="135" y2="48" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-7" x1="0" y1="48" x2="98" y2="48" xlink:href="#linear-gradient"/>
+  </defs>
+  <g id="Icons">
+    <g>
+      <line class="cls-2" x1="17" y1="3" x2="115" y2="3"/>
+      <line class="cls-5" x1="17" y1="63" x2="120" y2="63"/>
+      <line class="cls-4" x1="17" y1="33" x2="128" y2="33"/>
+      <g>
+        <line class="cls-6" x1="3" y1="18" x2="33" y2="18"/>
+        <line class="cls-3" x1="48" y1="18" x2="131" y2="18"/>
+      </g>
+      <g>
+        <line class="cls-7" x1="107" y1="48" x2="132" y2="48"/>
+        <line class="cls-1" x1="3" y1="48" x2="95" y2="48"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_2" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 161 161">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#linear-gradient-2);
+        filter: url(#drop-shadow-2);
+      }
+
+      .cls-2 {
+        fill: url(#linear-gradient);
+        filter: url(#outer-glow-1);
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="835.62" y1="-192.82" x2="922.08" y2="-192.82" gradientTransform="translate(-676.82 -433.33) rotate(46.35)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fabb41"/>
+      <stop offset=".24" stop-color="#f9b43c"/>
+      <stop offset=".57" stop-color="#f8a330"/>
+      <stop offset=".95" stop-color="#f7861d"/>
+      <stop offset="1" stop-color="#f7821a"/>
+    </linearGradient>
+    <filter id="outer-glow-1" filterUnits="userSpaceOnUse">
+      <feOffset dx="0" dy="0"/>
+      <feGaussianBlur result="blur" stdDeviation="7"/>
+      <feFlood flood-color="#fabb41" flood-opacity=".34"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient-2" x1="169.85" y1="86.18" x2="261.32" y2="86.18" gradientTransform="translate(-122.43 -31.88) rotate(7.28)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset=".11" stop-color="#fff5df"/>
+      <stop offset=".23" stop-color="#ffedc6"/>
+      <stop offset=".36" stop-color="#ffe6b2"/>
+      <stop offset=".51" stop-color="#ffe2a3"/>
+      <stop offset=".69" stop-color="#ffdf9b"/>
+      <stop offset="1" stop-color="#ffdf99"/>
+    </linearGradient>
+    <filter id="drop-shadow-2" filterUnits="userSpaceOnUse">
+      <feOffset dx="2" dy="1"/>
+      <feGaussianBlur result="blur-2" stdDeviation="5"/>
+      <feFlood flood-color="#3d2709" flood-opacity=".32"/>
+      <feComposite in2="blur-2" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Icons">
+    <g>
+      <polygon class="cls-2" points="76.29 139.99 60.74 124.5 38.86 122.63 36.9 100.76 21.35 85.27 33.9 67.26 31.94 45.4 53.14 39.67 65.69 21.66 85.61 30.9 106.8 25.17 116.12 45.05 136.04 54.29 130.4 75.5 139.72 95.38 121.76 108.01 116.12 129.23 94.25 127.36 76.29 139.99"/>
+      <circle class="cls-1" cx="80.5" cy="80.91" r="45.72"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Capa_2" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 176.33 133.26">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#radial-gradient-7);
+      }
+
+      .cls-2 {
+        fill: url(#radial-gradient-8);
+      }
+
+      .cls-3 {
+        fill: url(#radial-gradient-5);
+      }
+
+      .cls-4 {
+        fill: url(#radial-gradient-4);
+      }
+
+      .cls-5 {
+        fill: url(#radial-gradient-6);
+      }
+
+      .cls-6 {
+        fill: url(#radial-gradient);
+      }
+
+      .cls-7 {
+        fill: url(#radial-gradient-2);
+      }
+
+      .cls-8 {
+        fill: url(#radial-gradient-3);
+      }
+
+      .cls-9 {
+        fill: url(#radial-gradient-9);
+      }
+    </style>
+    <radialGradient id="radial-gradient" cx="1219.11" cy="-1.92" fx="1219.11" fy="-1.92" r="42.65" gradientTransform="translate(1353.44) rotate(-180) scale(1 -1)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d1cbc3"/>
+      <stop offset=".35" stop-color="#c7c1b9"/>
+      <stop offset=".94" stop-color="#aca69f"/>
+      <stop offset="1" stop-color="#aaa49d"/>
+    </radialGradient>
+    <radialGradient id="radial-gradient-2" cx="52.46" cy="43.74" fx="32.18" fy="43.74" r="84.07" gradientUnits="userSpaceOnUse">
+      <stop offset=".16" stop-color="#fefefe"/>
+      <stop offset=".37" stop-color="#f6f5f4"/>
+      <stop offset=".74" stop-color="#e2ded9"/>
+      <stop offset="1" stop-color="#d1cbc3"/>
+    </radialGradient>
+    <radialGradient id="radial-gradient-3" cx="651.34" cy="247.02" fx="651.34" fy="247.02" r="17.8" gradientTransform="translate(-613.11 -153.74)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7dbac7"/>
+      <stop offset=".45" stop-color="#7ab8c5"/>
+      <stop offset=".7" stop-color="#72b4c1"/>
+      <stop offset=".89" stop-color="#65aeb9"/>
+      <stop offset="1" stop-color="#59a8b2"/>
+    </radialGradient>
+    <radialGradient id="radial-gradient-4" cx="667.72" cy="111.15" fx="667.72" fy="111.15" r="17.8" gradientTransform="translate(-615.31 -25.07) scale(1 1.14)" xlink:href="#radial-gradient-3"/>
+    <radialGradient id="radial-gradient-5" cx="659.53" cy="-124.87" fx="659.53" fy="-124.87" r="17.8" gradientTransform="translate(-615.6 289.97) scale(1 1.53)" xlink:href="#radial-gradient-3"/>
+    <radialGradient id="radial-gradient-6" cx="675.35" cy="232.88" fx="675.35" fy="232.88" r="17.8" gradientTransform="translate(-609.31 -137.81)" xlink:href="#radial-gradient-3"/>
+    <radialGradient id="radial-gradient-7" cx="701.85" cy="219.22" fx="701.85" fy="219.22" r="17.8" gradientTransform="translate(-606.22 -120.56)" xlink:href="#radial-gradient-3"/>
+    <radialGradient id="radial-gradient-8" cx="691.73" cy="98.74" fx="691.73" fy="98.74" r="17.8" gradientTransform="translate(-611.51 -9.14) scale(1 1.14)" xlink:href="#radial-gradient-3"/>
+    <radialGradient id="radial-gradient-9" cx="683.54" cy="-134.13" fx="683.54" fy="-134.13" r="17.8" gradientTransform="translate(-611.81 305.9) scale(1 1.53)" xlink:href="#radial-gradient-3"/>
+  </defs>
+  <g id="Icons">
+    <g>
+      <g>
+        <path class="cls-6" d="M92.24,31.61c-.18-.95-.28-1.93-.28-2.93,0-8.42,6.82-15.24,15.24-15.24,1.54,0,3.03,.23,4.43,.66C115.36,5.79,123.7,0,133.39,0c12.81,0,23.25,10.1,23.82,22.77,10.59,.16,19.12,8.79,19.12,19.41,0,10.38-8.14,18.85-18.38,19.39-.14,.02-.29,.03-.43,.03H93.48s-.02,0-.04,0c-.03,0-.05,0-.08,0-8.3,0-15.02-6.73-15.02-15.02,0-7.92,6.13-14.4,13.9-14.98Z"/>
+        <path class="cls-7" d="M126.93,50.68c.28-1.43,.43-2.91,.43-4.43,0-12.71-10.3-23.01-23.01-23.01-2.33,0-4.57,.35-6.69,.99-5.63-12.53-18.21-21.27-32.85-21.27-19.34,0-35.11,15.25-35.96,34.37-15.98,.25-28.86,13.27-28.86,29.31s12.29,28.46,27.75,29.28c.21,.03,.43,.04,.65,.04H125.07s.04,0,.06,0c.04,0,.08,0,.11,0,12.52,0,22.68-10.15,22.68-22.68s-9.25-21.74-20.99-22.61Z"/>
+      </g>
+      <g>
+        <rect class="cls-8" x="36.44" y="68.16" width="3.59" height="50.22" rx="1.79" ry="1.79" transform="translate(59.01 -5.37) rotate(34.18)"/>
+        <rect class="cls-4" x="50.62" y="72.94" width="3.59" height="57.21" rx="1.79" ry="1.79" transform="translate(66.11 -11.91) rotate(34.18)"/>
+        <rect class="cls-3" x="42.14" y="61.15" width="3.59" height="76.63" rx="1.79" ry="1.79" transform="translate(63.47 -7.5) rotate(34.18)"/>
+        <rect class="cls-5" x="64.24" y="69.96" width="3.59" height="50.23" rx="1.79" ry="1.79" transform="translate(64.82 -20.68) rotate(34.18)"/>
+        <rect class="cls-1" x="93.84" y="73.54" width="3.59" height="50.23" rx="1.79" ry="1.79" transform="translate(71.95 -36.69) rotate(34.18)"/>
+        <rect class="cls-2" x="78.42" y="74.73" width="3.59" height="57.21" rx="1.79" ry="1.79" transform="translate(71.92 -27.22) rotate(34.18)"/>
+        <rect class="cls-9" x="69.94" y="62.94" width="3.59" height="76.63" rx="1.79" ry="1.79" transform="translate(69.28 -22.81) rotate(34.18)"/>
+      </g>
+    </g>
+  </g>
+</svg>

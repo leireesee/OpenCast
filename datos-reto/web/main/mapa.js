@@ -55,7 +55,14 @@ function cargarDatosAPI() {
                 marker._icon.classList.add("marcador");
                 marker._icon.id = `${localizacion.name}`;
                 marker._icon.title = `${localizacion.name}`;
-                marker.on('click', function () { mostrarCard(localizacion.name) });
+                marker.on('click', function () {
+                    mostrarCard(localizacion.name)
+                    // if ($(`#${localizacion.name}`).css('filter') == 'none') {
+                    //     $(`#${localizacion.name}`).css('filter', 'hue-rotate(250deg)')
+                    // } else {
+                    //     $(`#${localizacion.name}`).css('filter', 'none')
+                    // }
+                });
 
                 datosLocalizaciones.forEach(datos => {
                     if (datos.location_id == localizacion.id) {
@@ -123,9 +130,10 @@ function actualizarDatosAPI() {
 
 function actualizarCards(localizacion, datos) {
     let cardActualizar = document.getElementById(`card_${localizacion.name}`)
+    let srcIcono = cambiarIcono(datos.description)
     cardActualizar.innerHTML = `
         <article class="div_icono">
-            <img src="../img/iconos/sol.svg" alt="" id="icono">
+            <img src="../img/iconos/iconos_dinamicos/${srcIcono}" alt="" id="icono">
         </article>
         <article class="div_info">
             <div id="primera_linea">
@@ -156,11 +164,13 @@ function addCard(localizacion, datos) {
     let card = document.createElement('div')
     let ubicacionesSeleccionadas = document.getElementById("ubicaciones_seleccionadas")
 
+    let srcIcono = cambiarIcono(datos.description)
+
     card.className += "card_ubicacion"
     card.id = `card_${localizacion.name}`
     card.innerHTML += `
         <article class="div_icono">
-            <img src="../img/iconos/sol.svg" alt="" id="icono">
+            <img src="../img/iconos/iconos_dinamicos/${srcIcono}" alt="" id="icono">
         </article>
         <article class="div_info">
             <div id="primera_linea">
@@ -168,7 +178,7 @@ function addCard(localizacion, datos) {
                     <h3 id="texto_temperatura">${datos.temperature}º</h3>
                 </div>
                 <div id="eliminar" onClick="mostrarCard('${localizacion.name}')">
-                    <img src="../img/iconos/cerrar.svg" alt="" width="23px">
+                    <img id="icono_tiempo" src="../img/iconos/cerrar.svg" alt="" width="23px">
                 </div>
             </div>
             <div id="segunda_linea">
@@ -206,13 +216,17 @@ function mostrarCard(localizacion) {
             localizacionesString += `${localizacion},`
             localStorage.setItem('localizacionesSeleccionadas', localizacionesString)
         }
+        $(`#${localizacion}`).css('filter', 'hue-rotate(250deg)')
+
     } else {
         cardClickada.style.display = "none"
         let localizacionesArray = localizacionesString.split(',').filter(lugar => lugar != localizacion)
         localizacionesString = localizacionesArray.join(',')
         // console.log(localizacionesString)
         localStorage.setItem('localizacionesSeleccionadas', localizacionesString)
+        $(`#${localizacion}`).css('filter', 'none')
     }
+
 }
 
 
@@ -222,6 +236,7 @@ function mostrarCardStorage() {
     localizacionesArray.forEach(localizacion => {
         if (localizacion != '') {
             document.getElementById(`card_${localizacion}`).style.display = "flex"
+            $(`#${localizacion}`).css('filter', 'hue-rotate(250deg)')
         }
     });
 }
@@ -262,12 +277,12 @@ function cargarDatosTooltip(localizacion) {
 
     switch (localizacion.name) {
         case 'gasteiz':
-            console.log(localizacion.name)
-            console.log(fechaActualSeparada)
-            console.log(fechaMananaSeparada)
+            // console.log(localizacion.name)
+            // console.log(fechaActualSeparada)
+            // console.log(fechaMananaSeparada)
             const url = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/vitoria_gasteiz/locations/${localizacion.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
 
-            console.log(url)
+            // console.log(url)
 
             fetch(url, options)
                 .then(response => {
@@ -277,11 +292,14 @@ function cargarDatosTooltip(localizacion) {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data["temperature"]["value"]);
+                    // console.log(data["temperature"]["value"]);
                     let descripcion = data["forecastText"]["SPANISH"].split(' ')
-                    let descripcionMostrar = descripcion[0]
-                    descripcionMostrar += ' ' . descripcion[1]
-                    descripcionMostrar += ' ' . descripcion[2]
+                    let descripcionMostrar = new Array()
+                    descripcionMostrar.push(descripcion[0])
+                    descripcionMostrar.push(descripcion[1])
+                    descripcionMostrar.push(descripcion[2])
+
+                    descripcionMostrar = descripcionMostrar.join(' ')
                     descripcionMostrar += '.'
 
                     let temperaturaMostrar = Math.round(data["temperature"]["value"])
@@ -324,9 +342,9 @@ function cargarDatosTooltip(localizacion) {
             break;
 
         case 'bilbao':
-            console.log(localizacion.name)
-            console.log(fechaActualSeparada)
-            console.log(fechaMananaSeparada)
+            // console.log(localizacion.name)
+            // console.log(fechaActualSeparada)
+            // console.log(fechaMananaSeparada)
             const url2 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/great_bilbao/locations/${localizacion.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
 
             fetch(url2, options)
@@ -337,7 +355,7 @@ function cargarDatosTooltip(localizacion) {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data["temperature"]["value"]);
+                    // console.log(data["temperature"]["value"]);
                     let descripcionMostrar = data["forecastText"]["SPANISH"].split('.')
                     descripcionMostrar[0] += '.'
 
@@ -381,9 +399,9 @@ function cargarDatosTooltip(localizacion) {
             break;
 
         case 'donostia':
-            console.log(localizacion.name)
-            console.log(fechaActualSeparada)
-            console.log(fechaMananaSeparada)
+            // console.log(localizacion.name)
+            // console.log(fechaActualSeparada)
+            // console.log(fechaMananaSeparada)
             const url3 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/donostialdea/locations/${localizacion.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
 
             fetch(url3, options)
@@ -394,7 +412,7 @@ function cargarDatosTooltip(localizacion) {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data["temperature"]["value"]);
+                    // console.log(data["temperature"]["value"]);
                     let descripcionMostrar = data["forecastText"]["SPANISH"].split('.')
                     descripcionMostrar[0] += '.'
 
@@ -438,9 +456,9 @@ function cargarDatosTooltip(localizacion) {
             break;
 
         case 'hondarribia':
-            console.log(localizacion.name)
-            console.log(fechaActualSeparada)
-            console.log(fechaMananaSeparada)
+            // console.log(localizacion.name)
+            // console.log(fechaActualSeparada)
+            // console.log(fechaMananaSeparada)
             const url4 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/coast_zone/locations/${localizacion.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
 
             fetch(url4, options)
@@ -451,7 +469,7 @@ function cargarDatosTooltip(localizacion) {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data["temperature"]["value"]);
+                    // console.log(data["temperature"]["value"]);
                     let descripcionMostrar = data["forecastText"]["SPANISH"].split('.')
                     descripcionMostrar[0] += '.'
 
@@ -495,9 +513,9 @@ function cargarDatosTooltip(localizacion) {
             break;
 
         case 'irun':
-            console.log(localizacion.name)
-            console.log(fechaActualSeparada)
-            console.log(fechaMananaSeparada)
+            // console.log(localizacion.name)
+            // console.log(fechaActualSeparada)
+            // console.log(fechaMananaSeparada)
             const url5 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/coast_zone/locations/${localizacion.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
 
             fetch(url5, options)
@@ -508,7 +526,7 @@ function cargarDatosTooltip(localizacion) {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data["temperature"]["value"]);
+                    // console.log(data["temperature"]["value"]);
                     let descripcionMostrar = data["forecastText"]["SPANISH"].split('.')
                     descripcionMostrar[0] += '.'
 
@@ -552,9 +570,9 @@ function cargarDatosTooltip(localizacion) {
             break;
 
         case 'oiartzun':
-            console.log(localizacion.name)
-            console.log(fechaActualSeparada)
-            console.log(fechaMananaSeparada)
+            // console.log(localizacion.name)
+            // console.log(fechaActualSeparada)
+            // console.log(fechaMananaSeparada)
             const url6 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/cantabrian_valleys/locations/${localizacion.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
 
             fetch(url6, options)
@@ -565,7 +583,7 @@ function cargarDatosTooltip(localizacion) {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data["temperature"]["value"]);
+                    // console.log(data["temperature"]["value"]);
                     let descripcionMostrar = data["forecastText"]["SPANISH"].split('.')
                     descripcionMostrar[0] += '.'
 
@@ -617,6 +635,18 @@ function cargarDatosTooltip(localizacion) {
 
 /*ACTUALIZAR DATOS DE UBICACION*/
 function actualizarDatosUbicacionSeleccionada(localizacion, datos) {
+    let srcIcono = cambiarIcono(datos.description)
+    
+    let contWidgetHumedad = document.getElementById("widget_humedad")
+    contWidgetHumedad.style.display = 'block'
+
+    let contWidgetPrevision= document.getElementById("widget_prevision_por_horas")
+    contWidgetPrevision.style.display = 'block'
+
+    let contSeccionDragAndDrop = document.getElementById("drag_and_drop")
+    contSeccionDragAndDrop.style.display = 'block'
+
+    drag_and_drop
 
     /*ACTUALIZAR FECHA, HORA Y DIA SEMANA*/
     let contFecha = document.getElementById("fecha")
@@ -712,10 +742,15 @@ function actualizarDatosUbicacionSeleccionada(localizacion, datos) {
 
     /*ACTUALIZAR PRIMEROS DATOS*/
     let contCiudad = document.getElementById("ciudad")
+    let contProvincia = document.getElementById("provincia")
     let contTemperatura = document.getElementById("info_principal_temperatura")
     let contDescripcion = document.getElementById("descripcion")
+    let icono = document.getElementById("icono_tiempo_ubicacion_seleccionada")
+    console.log(icono)
+    icono.src = '../img/iconos/iconos_dinamicos/' + srcIcono
 
     contCiudad.innerHTML = `${capitalizeFirstLetter(localizacion.name)}`
+    contProvincia.innerHTML = 'País Vasco'
     contTemperatura.innerHTML = `${datos.temperature}º`
     contDescripcion.innerHTML = `${datos.description}`
 
@@ -882,11 +917,24 @@ function cargarGrafico() {
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: [1, 2, 3],
+            labels: [1, 2, 3, 4, 5, 6],
             datasets: [{
-                label: '# of Votes',
+                label: 'Temperatura',
                 data: [12, 19, 3, 5, 2, 3],
-                borderWidth: 1
+                borderWidth: 1,
+                color: 'rgb(255, 99, 131)',
+            },
+            {
+                label: 'Precipitacion',
+                data: [20, 8, 3, 13, 2, 1],
+                borderWidth: 1,
+                color: 'rgb(55, 162, 235)'
+            },
+            {
+                label: 'Humedad',
+                data: [60, 93, 85, 67, 60, 75],
+                borderWidth: 1,
+                color: 'rgb(254, 206, 86)'
             }]
         },
         options: {
@@ -952,3 +1000,53 @@ function controlFechaMaximaMinima(cadena) {
 
     // fechaFin.min = fechaIniDate.toISOString().split('T')[0]
 }
+
+
+/*CAMBIO DE ICONOS*/
+function cambiarIcono(descripcion){
+
+    // console.log(descripcion)
+
+    const possibleDescriptions = {
+        'Despejado': 'sol.svg',
+        'Poco nuboso': 'sol_nube.svg',
+        'Intervalos nubosos': 'sol_nube.svg',
+        'Nuboso': 'nube.svg',
+        'Muy nuboso': 'nube_nube.svg',
+        'Cubierto': 'nube.svg',
+        'Nubes altas': 'nube.svg',
+        'Intervalos nubosos con lluvia escasa': 'lluvia_escasa.svg',
+        'Nuboso con lluvia escasa': 'lluvia_escasa.svg',
+        'Muy nuboso con lluvia escasa': 'lluvia_escasa.svg',
+        'Cubierto con lluvia escasa': 'lluvia_escasa.svg',
+        'Intervalos nubosos con lluvia': 'lluvia.svg',
+        'Nuboso con lluvia': 'lluvia.svg',
+        'Muy nuboso con lluvia': 'lluvia.svg',
+        'Cubierto con lluvia': 'lluvia.svg',
+        'Intervalos nubosos con nieve escasa': 'nieve.svg',
+        'Nuboso con nieve escasa': 'nieve.svg',
+        'Muy nuboso con nieve escasa': 'nieve.svg',
+        'Cubierto con nieve escasa': 'nieve.svg',
+        'Intervalos nubosos con nieve': 'nieve.svg',
+        'Nuboso con nieve': 'nieve.svg',
+        'Muy nuboso con nieve': 'nieve.svg',
+        'Cubierto con nieve': 'nieve.svg',
+        'Intervalos nubosos con tormenta': 'tormenta.svg',
+        'Nuboso con tormenta': 'tormenta.svg',
+        'Muy nuboso con tormenta': 'tormenta.svg',
+        'Cubierto con tormenta': 'tormenta.svg',
+        'Intervalos nubosos con tormenta y lluvia escasa': 'tormenta.svg',
+        'Nuboso con tormenta y lluvia escasa': 'tormenta.svg',
+        'Muy nuboso con tormenta y lluvia escasa': 'tormenta.svg',
+        'Cubierto con tormenta y lluvia escasa': 'tormenta.svg',
+        'Niebla': 'niebla.svg',
+        'Bruma': 'niebla.svg',
+        'Calima': 'niebla.svg'
+    };
+
+    return possibleDescriptions[`${descripcion}`]
+
+}
+
+
+
