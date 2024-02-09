@@ -24,11 +24,8 @@ Route::middleware('auth:api')->group(function() {
     Route::get('logout', [UserController::class, 'logout']);
 });
 
-
-/* -------------------------- */
-
-Route::get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::get('/getData', [MeasurementHistoryController::class, 'index']);
+
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// });

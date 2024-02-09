@@ -5,12 +5,12 @@ form.addEventListener('submit', event => {
 
     const urlAPI = 'http://'+urlActual+':8086/api/register'
 
-    const data = {
+    let data = {
         name: document.getElementById('name').value,
         email: document.getElementById('email').value,
         password: document.getElementById('password').value
     }
-
+    console.log(data)
     const config = {
         method: 'POST',
         headers: {

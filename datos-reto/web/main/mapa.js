@@ -27,7 +27,7 @@ let datosLocalizaciones = []
 
 function cargarDatosAPI() {
 
-    fetch('http://'+urlActual+':8086/api/getData')
+    fetch('http://' + urlActual + ':8086/api/getData')
         .then(response => {
             if (!response.ok) {
                 throw new Error("La solicitud no se pudo completar correctamente.");
@@ -82,7 +82,7 @@ setInterval(() => {
 }, 15000);
 
 function actualizarDatosAPI() {
-    fetch('http://'+urlActual+':8086/api/getData')
+    fetch('http://' + urlActual + ':8086/api/getData')
         .then(response => {
             if (!response.ok) {
                 throw new Error("La solicitud no se pudo completar correctamente.");
@@ -110,7 +110,6 @@ function actualizarDatosAPI() {
                         }
                         actualizarCards(localizacion, datos)
                     }
-                    /*ejecutamos la funcion del tooltip*/
                 })
 
             });
@@ -121,7 +120,6 @@ function actualizarDatosAPI() {
         });
 }
 
-// cargarDatosTooltip()
 
 function actualizarCards(localizacion, datos) {
     let cardActualizar = document.getElementById(`card_${localizacion.name}`)
@@ -238,33 +236,38 @@ function capitalizeFirstLetter(cadena) {
 /*TOOLTIP*/
 function cargarDatosTooltip(localizacion) {
 
-    console.log(localizacion)
+    // console.log(localizacion)
 
     let fechaActual = new Date()
     let fechaManana = new Date()
     fechaManana.setDate(parseInt(fechaActual.getDate()) + 1)
 
+    // let fechaActualSeparada = fechaActual.toISOString().split('T')[0].split('-').join("/")
     let fechaActualSeparada = fechaActual.toISOString().split('T')[0].split('-').join("/")
     let fechaMananaSeparada = fechaManana.toISOString().split('T')[0].split('-').join('')
 
-    console.log(fechaActualSeparada)
-    console.log(fechaMananaSeparada)
 
-    let fromDate = new Date().toString();
-    let toDate = new Date() + 1;
+
+    // console.log(fechaActualSeparada)
+    // console.log(fechaMananaSeparada)
 
     const token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJtZXQwMS5hcGlrZXkiLCJpc3MiOiJJRVMgUExBSUFVTkRJIEJISSBJUlVOIiwiZXhwIjoyMjM4MTMxMDAyLCJ2ZXJzaW9uIjoiMS4wLjAiLCJpYXQiOjE2Mzk3NDc5MDcsImVtYWlsIjoiaWtjZmNAcGxhaWF1bmRpLm5ldCJ9.PwlkDxwtidWSjLo81yRgf6vITaU5yGDH1TgXAVf5Ijl07Bz8auOyQX3uMGiC8GhGiHHymNDBK1IoM3C1aeasdGngQsAMoS9jbiGNGNOhb9JthJnY778zPBxZ6EzlnZEuDFRDGZCRbB4IkyzQk677rP3Nt0v5GPU8g2F4uacpTCWwj0k_fQsCCfhNY89ECGV1pFMwJc_9m7Rezzxd6IMxLyir7MgaWWRGvGb1kH4XqBV_roBBSIO70j4P-p0udoZIuRKWrDZexrSeX9G_brJJplwzoI2eo8mQVX3u3uzn-9E2iystKe0IS3k6uLYiHnNuPQnCkIBUg3JAhu_q9V8iIg';
 
     const options = {
-        method: 'POST',
+        method: 'GET',
         headers: {
-            'Authorization': `Bearer ${token}`
+            Authorization: `Bearer ${token}`
         }
     };
 
     switch (localizacion.name) {
         case 'gasteiz':
-            const url = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/vitoria_gasteiz/locations/${location.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
+            console.log(localizacion.name)
+            console.log(fechaActualSeparada)
+            console.log(fechaMananaSeparada)
+            const url = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/vitoria_gasteiz/locations/${localizacion.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
+
+            console.log(url)
 
             fetch(url, options)
                 .then(response => {
@@ -274,15 +277,44 @@ function cargarDatosTooltip(localizacion) {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
+                    console.log(data["temperature"]["value"]);
+                    let descripcion = data["forecastText"]["SPANISH"].split(' ')
+                    let descripcionMostrar = descripcion[0]
+                    descripcionMostrar += ' ' . descripcion[1]
+                    descripcionMostrar += ' ' . descripcion[2]
+                    descripcionMostrar += '.'
+
+                    let temperaturaMostrar = Math.round(data["temperature"]["value"])
+
 
                     $(function () {
-                        $(document).tooltip({
+                        $(`#${localizacion.name}`).tooltip({
                             classes: {
                                 "ui-tooltip": "balizas"
                             },
                             position: { my: "bottom-13", at: "top" },
-                            content: `<div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'><article><p style='font-size: 14px; font-weight: 400'>Mañana:</p><p style='font-size: 40px; font-weight: 600; line-height: 37px; margin-top: 5px'>30º</p><p style='font-weight: 200; font-size: 13px'>Soleado</p></article><article><img src='../img/iconos/sol.svg' width='60px' style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'></article></div><img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>`
+                            content: `
+                            <div>
+                                <p style='font-size: 14px; font-weight: 400'>Mañana:</p>
+                                
+                                <div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'>
+                                    <article>
+                                        <p style='font-size: 45px; font-weight: 600; line-height: 43px; margin-bottom: 7px'>
+                                            ${temperaturaMostrar}º</p>
+                                    </article>
+                                    <article>
+                                        <img style='margin-right: 15px' src='../img/iconos/sol.svg' width='55px'
+                                            style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'>
+                                    </article>
+                                </div>
+                                <div>
+                                    <p style='font-weight: 200; font-size: 13px'>${descripcionMostrar}</p>
+                                </div>
+                            </div>
+                            
+                        
+                        <img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>
+                        `
                         });
                     });
                 })
@@ -292,7 +324,10 @@ function cargarDatosTooltip(localizacion) {
             break;
 
         case 'bilbao':
-            const url2 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/vitoria_gasteiz/locations/${location.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
+            console.log(localizacion.name)
+            console.log(fechaActualSeparada)
+            console.log(fechaMananaSeparada)
+            const url2 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/great_bilbao/locations/${localizacion.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
 
             fetch(url2, options)
                 .then(response => {
@@ -302,15 +337,41 @@ function cargarDatosTooltip(localizacion) {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
+                    console.log(data["temperature"]["value"]);
+                    let descripcionMostrar = data["forecastText"]["SPANISH"].split('.')
+                    descripcionMostrar[0] += '.'
+
+                    let temperaturaMostrar = Math.round(data["temperature"]["value"])
+
 
                     $(function () {
-                        $(document).tooltip({
+                        $(`#${localizacion.name}`).tooltip({
                             classes: {
                                 "ui-tooltip": "balizas"
                             },
                             position: { my: "bottom-13", at: "top" },
-                            content: `<div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'><article><p style='font-size: 14px; font-weight: 400'>Mañana:</p><p style='font-size: 40px; font-weight: 600; line-height: 37px; margin-top: 5px'>30º</p><p style='font-weight: 200; font-size: 13px'>Soleado</p></article><article><img src='../img/iconos/sol.svg' width='60px' style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'></article></div><img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>`
+                            content: `
+                            <div>
+                                <p style='font-size: 14px; font-weight: 400'>Mañana:</p>
+                                
+                                <div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'>
+                                    <article>
+                                        <p style='font-size: 45px; font-weight: 600; line-height: 43px; margin-bottom: 7px'>
+                                            ${temperaturaMostrar}º</p>
+                                    </article>
+                                    <article>
+                                        <img style='margin-right: 15px' src='../img/iconos/sol.svg' width='55px'
+                                            style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'>
+                                    </article>
+                                </div>
+                                <div>
+                                    <p style='font-weight: 200; font-size: 13px'>${descripcionMostrar[0]}</p>
+                                </div>
+                            </div>
+                            
+                        
+                        <img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>
+                        `
                         });
                     });
                 })
@@ -320,7 +381,10 @@ function cargarDatosTooltip(localizacion) {
             break;
 
         case 'donostia':
-            const url3 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/vitoria_gasteiz/locations/${location.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
+            console.log(localizacion.name)
+            console.log(fechaActualSeparada)
+            console.log(fechaMananaSeparada)
+            const url3 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/donostialdea/locations/${localizacion.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
 
             fetch(url3, options)
                 .then(response => {
@@ -330,15 +394,41 @@ function cargarDatosTooltip(localizacion) {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
+                    console.log(data["temperature"]["value"]);
+                    let descripcionMostrar = data["forecastText"]["SPANISH"].split('.')
+                    descripcionMostrar[0] += '.'
+
+                    let temperaturaMostrar = Math.round(data["temperature"]["value"])
+
 
                     $(function () {
-                        $(document).tooltip({
+                        $(`#${localizacion.name}`).tooltip({
                             classes: {
                                 "ui-tooltip": "balizas"
                             },
                             position: { my: "bottom-13", at: "top" },
-                            content: `<div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'><article><p style='font-size: 14px; font-weight: 400'>Mañana:</p><p style='font-size: 40px; font-weight: 600; line-height: 37px; margin-top: 5px'>30º</p><p style='font-weight: 200; font-size: 13px'>Soleado</p></article><article><img src='../img/iconos/sol.svg' width='60px' style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'></article></div><img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>`
+                            content: `
+                            <div>
+                                <p style='font-size: 14px; font-weight: 400'>Mañana:</p>
+                                
+                                <div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'>
+                                    <article>
+                                        <p style='font-size: 45px; font-weight: 600; line-height: 43px; margin-bottom: 7px'>
+                                            ${temperaturaMostrar}º</p>
+                                    </article>
+                                    <article>
+                                        <img style='margin-right: 15px' src='../img/iconos/sol.svg' width='55px'
+                                            style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'>
+                                    </article>
+                                </div>
+                                <div>
+                                    <p style='font-weight: 200; font-size: 13px'>${descripcionMostrar[0]}</p>
+                                </div>
+                            </div>
+                            
+                        
+                        <img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>
+                        `
                         });
                     });
                 })
@@ -348,7 +438,10 @@ function cargarDatosTooltip(localizacion) {
             break;
 
         case 'hondarribia':
-            const url4 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/vitoria_gasteiz/locations/${location.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
+            console.log(localizacion.name)
+            console.log(fechaActualSeparada)
+            console.log(fechaMananaSeparada)
+            const url4 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/coast_zone/locations/${localizacion.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
 
             fetch(url4, options)
                 .then(response => {
@@ -358,15 +451,41 @@ function cargarDatosTooltip(localizacion) {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
+                    console.log(data["temperature"]["value"]);
+                    let descripcionMostrar = data["forecastText"]["SPANISH"].split('.')
+                    descripcionMostrar[0] += '.'
+
+                    let temperaturaMostrar = Math.round(data["temperature"]["value"])
+
 
                     $(function () {
-                        $(document).tooltip({
+                        $(`#${localizacion.name}`).tooltip({
                             classes: {
                                 "ui-tooltip": "balizas"
                             },
                             position: { my: "bottom-13", at: "top" },
-                            content: `<div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'><article><p style='font-size: 14px; font-weight: 400'>Mañana:</p><p style='font-size: 40px; font-weight: 600; line-height: 37px; margin-top: 5px'>30º</p><p style='font-weight: 200; font-size: 13px'>Soleado</p></article><article><img src='../img/iconos/sol.svg' width='60px' style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'></article></div><img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>`
+                            content: `
+                            <div>
+                                <p style='font-size: 14px; font-weight: 400'>Mañana:</p>
+                                
+                                <div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'>
+                                    <article>
+                                        <p style='font-size: 45px; font-weight: 600; line-height: 43px; margin-bottom: 7px'>
+                                            ${temperaturaMostrar}º</p>
+                                    </article>
+                                    <article>
+                                        <img style='margin-right: 15px' src='../img/iconos/sol.svg' width='55px'
+                                            style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'>
+                                    </article>
+                                </div>
+                                <div>
+                                    <p style='font-weight: 200; font-size: 13px'>${descripcionMostrar[0]}</p>
+                                </div>
+                            </div>
+                            
+                        
+                        <img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>
+                        `
                         });
                     });
                 })
@@ -376,7 +495,10 @@ function cargarDatosTooltip(localizacion) {
             break;
 
         case 'irun':
-            const url5 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/vitoria_gasteiz/locations/${location.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
+            console.log(localizacion.name)
+            console.log(fechaActualSeparada)
+            console.log(fechaMananaSeparada)
+            const url5 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/coast_zone/locations/${localizacion.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
 
             fetch(url5, options)
                 .then(response => {
@@ -386,15 +508,41 @@ function cargarDatosTooltip(localizacion) {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
+                    console.log(data["temperature"]["value"]);
+                    let descripcionMostrar = data["forecastText"]["SPANISH"].split('.')
+                    descripcionMostrar[0] += '.'
+
+                    let temperaturaMostrar = Math.round(data["temperature"]["value"])
+
 
                     $(function () {
-                        $(document).tooltip({
+                        $(`#${localizacion.name}`).tooltip({
                             classes: {
                                 "ui-tooltip": "balizas"
                             },
                             position: { my: "bottom-13", at: "top" },
-                            content: `<div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'><article><p style='font-size: 14px; font-weight: 400'>Mañana:</p><p style='font-size: 40px; font-weight: 600; line-height: 37px; margin-top: 5px'>30º</p><p style='font-weight: 200; font-size: 13px'>Soleado</p></article><article><img src='../img/iconos/sol.svg' width='60px' style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'></article></div><img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>`
+                            content: `
+                            <div>
+                                <p style='font-size: 14px; font-weight: 400'>Mañana:</p>
+                                
+                                <div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'>
+                                    <article>
+                                        <p style='font-size: 45px; font-weight: 600; line-height: 43px; margin-bottom: 7px'>
+                                            ${temperaturaMostrar}º</p>
+                                    </article>
+                                    <article>
+                                        <img style='margin-right: 15px' src='../img/iconos/sol.svg' width='55px'
+                                            style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'>
+                                    </article>
+                                </div>
+                                <div>
+                                    <p style='font-weight: 200; font-size: 13px'>${descripcionMostrar[0]}</p>
+                                </div>
+                            </div>
+                            
+                        
+                        <img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>
+                        `
                         });
                     });
                 })
@@ -404,7 +552,10 @@ function cargarDatosTooltip(localizacion) {
             break;
 
         case 'oiartzun':
-            const url6 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/vitoria_gasteiz/locations/${location.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
+            console.log(localizacion.name)
+            console.log(fechaActualSeparada)
+            console.log(fechaMananaSeparada)
+            const url6 = `https://api.euskadi.eus/euskalmet/weather/regions/basque_country/zones/cantabrian_valleys/locations/${localizacion.name}/forecast/at/${fechaActualSeparada}/for/${fechaMananaSeparada}`
 
             fetch(url6, options)
                 .then(response => {
@@ -414,15 +565,41 @@ function cargarDatosTooltip(localizacion) {
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data);
+                    console.log(data["temperature"]["value"]);
+                    let descripcionMostrar = data["forecastText"]["SPANISH"].split('.')
+                    descripcionMostrar[0] += '.'
+
+                    let temperaturaMostrar = Math.round(data["temperature"]["value"])
+
 
                     $(function () {
-                        $(document).tooltip({
+                        $(`#${localizacion.name}`).tooltip({
                             classes: {
                                 "ui-tooltip": "balizas"
                             },
                             position: { my: "bottom-13", at: "top" },
-                            content: `<div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'><article><p style='font-size: 14px; font-weight: 400'>Mañana:</p><p style='font-size: 40px; font-weight: 600; line-height: 37px; margin-top: 5px'>30º</p><p style='font-weight: 200; font-size: 13px'>Soleado</p></article><article><img src='../img/iconos/sol.svg' width='60px' style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'></article></div><img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>`
+                            content: `
+                            <div>
+                                <p style='font-size: 14px; font-weight: 400'>Mañana:</p>
+                                
+                                <div style='display:flex; align-items: flex-end; justify-content: space-between; position: relative'>
+                                    <article>
+                                        <p style='font-size: 45px; font-weight: 600; line-height: 43px; margin-bottom: 7px'>
+                                            ${temperaturaMostrar}º</p>
+                                    </article>
+                                    <article>
+                                        <img style='margin-right: 15px' src='../img/iconos/sol.svg' width='55px'
+                                            style='filter: drop-shadow(0px 0px 10px rgb(0, 71, 255, 0.25))'>
+                                    </article>
+                                </div>
+                                <div>
+                                    <p style='font-weight: 200; font-size: 13px'>${descripcionMostrar[0]}</p>
+                                </div>
+                            </div>
+                            
+                        
+                        <img src='../img/iconos/piquito.svg' width='20px' style='position: absolute; bottom: -10px; left: 75px'>
+                        `
                         });
                     });
                 })
@@ -621,14 +798,9 @@ $(document).ready(function () {
         let contWidgets = document.getElementById("div_iconos_drag_and_drop")
 
         if (($('#sol').is(":hidden")) && ($('#lluvias').is(":hidden")) && ($('#viento').is(":hidden"))) {
-
-            // contWidgets.innerHTML += '<p id="div_iconos_drag_and_drop_parrafo_p" style="color: gray; border: 1px dashed gray; font-size: 12px; padding: 15px; border-radius: 12px; width: 100%">Arrastra los elementos de vuelta para eliminar.</p>'
-            // contWidgets.css.content += '<p id="div_iconos_drag_and_drop_parrafo_p" style="color: gray; border: 1px dashed gray; font-size: 12px; padding: 15px; border-radius: 12px; width: 100%">Arrastra los elementos de vuelta para eliminar.</p>'
-            let p = document.createElement('p')
-            p.id = "text"
-            p.innerHTML = "Arrastra los elementos de vuelta para eliminar."
-            contWidgets.append(p);
-            console.log(contWidgets)
+            setTimeout(() => {
+                alert('Arrastre los elemntos de vuelta para eliminarlos')
+            }, 100);
         }
     });
 
@@ -674,16 +846,6 @@ $(document).ready(function () {
     $("#div_iconos_drag_and_drop").on("drop", function (event) {
         event.preventDefault();
         let contWidgets = document.getElementById("div_iconos_drag_and_drop")
-        console.log(document.getElementById('text'))
-        if (document.getElementById('text') == null) {
-            contWidgets.removeChild(document.getElementById('text'))
-        }
-        let contWidgetsParrafo = document.getElementById("div_iconos_drag_and_drop_parrafo")
-
-
-        if (contWidgets.lastChild.id == 'text') {
-            contWidgetsParrafo.removeChild(contWidgets.lastChild)
-        }
 
         const id_widget = event.originalEvent.dataTransfer.getData('text')
         // console.log(id_widget)
@@ -707,19 +869,7 @@ $(document).ready(function () {
                 break;
         }
 
-
-        // let contPWidgets = document.getElementById("texto_div_widgets_vacios")
-        // contPWidgets.style.display = "none"
-
-        // let contWidgets = document.getElementById("div_iconos_drag_and_drop_parrafo")
-
-        // if (($('#sol').is(":visible")) || ($('#lluvias').is(":visible")) || ($('#viento').is(":visible"))) {
-
-        //     contWidgets.innerHTML = ''
-        // }
-
     });
-
 
 });
 

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\JsonResponse;
+
 
 class UserController extends Controller
 {
-    public function register(Request $request)
+    public function register(Request $request) : JsonResponse
     {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
