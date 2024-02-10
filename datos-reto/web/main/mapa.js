@@ -636,11 +636,11 @@ function cargarDatosTooltip(localizacion) {
 /*ACTUALIZAR DATOS DE UBICACION*/
 function actualizarDatosUbicacionSeleccionada(localizacion, datos) {
     let srcIcono = cambiarIcono(datos.description)
-    
+
     let contWidgetHumedad = document.getElementById("widget_humedad")
     contWidgetHumedad.style.display = 'block'
 
-    let contWidgetPrevision= document.getElementById("widget_prevision_por_horas")
+    let contWidgetPrevision = document.getElementById("widget_prevision_por_horas")
     contWidgetPrevision.style.display = 'block'
 
     let contSeccionDragAndDrop = document.getElementById("drag_and_drop")
@@ -833,9 +833,11 @@ $(document).ready(function () {
         let contWidgets = document.getElementById("div_iconos_drag_and_drop")
 
         if (($('#sol').is(":hidden")) && ($('#lluvias').is(":hidden")) && ($('#viento').is(":hidden"))) {
-            setTimeout(() => {
-                alert('Arrastre los elemntos de vuelta para eliminarlos')
-            }, 100);
+            // setTimeout(() => {
+            //     alert('Arrastre los elemntos de vuelta para eliminarlos')
+            // }, 100);
+            let parrafo = document.getElementById("div_iconos_drag_and_drop_parrafo")
+            parrafo.style.display = 'block'
         }
     });
 
@@ -881,6 +883,7 @@ $(document).ready(function () {
     $("#div_iconos_drag_and_drop").on("drop", function (event) {
         event.preventDefault();
         let contWidgets = document.getElementById("div_iconos_drag_and_drop")
+        let parrafo = document.getElementById("div_iconos_drag_and_drop_parrafo")
 
         const id_widget = event.originalEvent.dataTransfer.getData('text')
         // console.log(id_widget)
@@ -888,16 +891,19 @@ $(document).ready(function () {
             case "widget_sol":
                 $('#sol').show()
                 $('#widget_sol').hide()
+                parrafo.style.display = 'none'
                 break;
 
             case "widget_precipitaciones":
                 $('#lluvias').show()
                 $('#widget_precipitaciones').hide()
+                parrafo.style.display = 'none'
                 break;
 
             case "widget_viento":
                 $('#viento').show()
                 $('#widget_viento').hide()
+                parrafo.style.display = 'none'
                 break;
 
             default:
@@ -1003,7 +1009,7 @@ function controlFechaMaximaMinima(cadena) {
 
 
 /*CAMBIO DE ICONOS*/
-function cambiarIcono(descripcion){
+function cambiarIcono(descripcion) {
 
     // console.log(descripcion)
 
