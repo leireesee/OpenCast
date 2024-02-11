@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+html{
+    scroll-behavior: smooth;
+}
+
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -16,8 +21,18 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    background-position: bottom center;
     overflow-x: hidden;
+    position: relative;
+}
 
+nav{
+    display: none;
+}
+
+.espacio{
+    display: none;
+    height: 20px;
 }
 
 /*ICONOS*/
@@ -109,7 +124,7 @@ input {
 /*CARDS*/
 #ubicaciones_seleccionadas {
     width: 100%;
-    height: 37vh;
+    max-height: 30vh !important;
     margin-top: 20px;
     margin-bottom: 20px;
     display: flex;
@@ -142,7 +157,7 @@ input {
 
 .card_ubicacion {
     width: 49%;
-    min-width: 350px;
+    min-width: 340px;
     height: 150px;
     /* max-width: 450px; */
     background: radial-gradient(#ffe8ae, #c4e6ff 65%, #d5edff);
@@ -741,12 +756,32 @@ canvas {
     /* body{
         background-color: red;
     } */
+
+    .espacio{
+        display: block;
+    }
+
     #ubicaciones {
         width: 100%;
+        height: 90%;
+    }
+
+    #ubicaciones_seleccionadas{
+        height: 22vh !important;
+    }
+
+    .card_ubicacion {
+        min-width: none !important;
+        width: 100% !important;
+    }
+
+    #icono{
+        margin-right: 20px;
     }
 
     #info_ubicacion {
         width: 100%;
+        height: 90%;
     }
 
     .card_ubicacion{
@@ -755,6 +790,7 @@ canvas {
 
     #ajustes{
         width: 100%;
+        order: 1;
     }
 
     #seccion_grafico{
@@ -764,4 +800,80 @@ canvas {
     .medida p{
         width: auto;
     }
+    
+    nav{
+        width: 100%;
+        display: block;
+        position: fixed;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.477);
+        backdrop-filter: blur(20px);
+        padding-top: 20px;
+        padding-bottom: 20px;
+        z-index: 9999;
+    }
+
+    nav ul{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    nav ul li{
+        list-style-type: none;
+    }
+
+    nav ul li a{
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        color: black;
+    }
+
+    nav ul li img{
+        margin-bottom: 10px;
+    }
+
+    .medida{
+        display: inline-block !important;
+    }
+
+    .pill-nav a {
+        font-size: 16px;
+        flex: 1;
+        margin-top: 8px !important;
+    }
+
+}
+
+@media (width < 1040px) , handheld and (orientation: landscape){
+    #ubicaciones{
+        height: auto !important
+    }
+
+    #ubicaciones{
+        padding-bottom: 0 !important;
+    }
+
+    #ubicaciones_seleccionadas{
+        height: 300px !important;
+        max-height: none !important;
+        gap: 15px !important;
+    }
+
+    .card_ubicacion{
+        width: 49% !important;
+    }
+
+    #info_ubicacion{
+        height: fit-content !important;
+        padding-left: 40px !important;
+        padding-right: 40px !important;
+        padding-bottom: 300px !important;
+    }
+
+    #seccion_grafico, #ajustes{
+        height: fit-content;
+    }
+
 }

@@ -20,6 +20,8 @@ logout.addEventListener('click', e => {
 let localizacionesString = localStorage.getItem('localizacionesSeleccionadas') || ''
 
 
+mostrarParrafoClickBalizas()
+
 
 /*CARGAR DATOS DE LAS LOCALIZACIONES*/
 let localizaciones = []
@@ -643,8 +645,6 @@ function actualizarDatosUbicacionSeleccionada(localizacion, datos) {
     let contSeccionDragAndDrop = document.getElementById("drag_and_drop")
     contSeccionDragAndDrop.style.display = 'block'
 
-    drag_and_drop
-
     /*ACTUALIZAR FECHA, HORA Y DIA SEMANA*/
     let contFecha = document.getElementById("fecha")
 
@@ -685,7 +685,7 @@ function actualizarDatosUbicacionSeleccionada(localizacion, datos) {
         case 6:
             diaSemanaString = 'Sábado'
             break;
-        case 7:
+        case 0:
             diaSemanaString = 'Domingo'
             break;
         default:
