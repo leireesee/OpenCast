@@ -163,6 +163,8 @@ function actualizarCards(localizacion, datos) {
 function addCard(localizacion, datos) {
     let card = document.createElement('div')
     let ubicacionesSeleccionadas = document.getElementById("ubicaciones_seleccionadas")
+    
+    mostrarParrafoClickBalizas()
 
     let srcIcono = cambiarIcono(datos.description)
 
@@ -207,7 +209,8 @@ function addCard(localizacion, datos) {
 function mostrarCard(localizacion) {
 
     // console.log(localizacion)
-
+    
+    
     let cardClickada = document.getElementById(`card_${localizacion}`)
 
     if (cardClickada.style.display == "none") {
@@ -226,6 +229,8 @@ function mostrarCard(localizacion) {
         localStorage.setItem('localizacionesSeleccionadas', localizacionesString)
         $(`#${localizacion}`).css('filter', 'none')
     }
+
+    mostrarParrafoClickBalizas()
 
 }
 
@@ -293,15 +298,7 @@ function cargarDatosTooltip(localizacion) {
                 })
                 .then(data => {
                     // console.log(data["temperature"]["value"]);
-                    let descripcion = data["forecastText"]["SPANISH"].split(' ')
-                    let descripcionMostrar = new Array()
-                    descripcionMostrar.push(descripcion[0])
-                    descripcionMostrar.push(descripcion[1])
-                    descripcionMostrar.push(descripcion[2])
-
-                    descripcionMostrar = descripcionMostrar.join(' ')
-                    descripcionMostrar += '.'
-
+                    let descripcion = data["forecastText"]["SPANISH"]
                     let temperaturaMostrar = Math.round(data["temperature"]["value"])
 
 
@@ -326,7 +323,7 @@ function cargarDatosTooltip(localizacion) {
                                     </article>
                                 </div>
                                 <div>
-                                    <p style='font-weight: 200; font-size: 13px'>${descripcionMostrar}</p>
+                                    <p style='font-weight: 200; font-size: 13px'>${descripcion}</p>
                                 </div>
                             </div>
                             
@@ -1052,6 +1049,16 @@ function cambiarIcono(descripcion) {
 
     return possibleDescriptions[`${descripcion}`]
 
+}
+
+function mostrarParrafoClickBalizas(){
+    let textoUbicacionesSeleccionadas = document.getElementById("div_ubicaciones_seleccionadas_parrafo")
+
+    if (localStorage.getItem('localizacionesSeleccionadas') == '') {
+        textoUbicacionesSeleccionadas.style.display = 'flex'
+    } else {
+        textoUbicacionesSeleccionadas.style.display = 'none'
+    }
 }
 
 

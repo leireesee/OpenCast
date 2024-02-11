@@ -15,11 +15,14 @@ body {
     background-image: url('../img/mapa-fondo.svg');
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: fixed;
+    background-attachment: fixed;
+    overflow-x: hidden;
+
 }
 
 /*ICONOS*/
-#icono, #icono_tiempo_ubicacion_seleccionada{
+#icono,
+#icono_tiempo_ubicacion_seleccionada {
     filter: drop-shadow(0px 0px 40px #46fff384) !important;
 }
 
@@ -114,7 +117,6 @@ input {
     /* align-items: flex-start; */
     flex-wrap: wrap;
     overflow-y: scroll;
-    position: relative;
     padding-right: 10px;
     border-radius: 20px;
 }
@@ -285,7 +287,7 @@ input {
     flex-wrap: wrap;
     gap: 20px;
     max-height: 55vh;
-    overflow-y: scroll; 
+    overflow-y: scroll;
     margin-top: 30px;
     /* padding-bottom: 30px; */
     padding-right: 10px;
@@ -456,7 +458,7 @@ input {
     width: 20px;
 }
 
-.icono_widget{
+.icono_widget {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -472,7 +474,7 @@ input {
     justify-content: space-between;
 }
 
-#ajustes_primera_linea a{
+#ajustes_primera_linea a {
     text-decoration: none;
     color: #1A1C29;
 }
@@ -488,14 +490,14 @@ input {
     font-weight: 400;
 }
 
-#ajustes #ajustes_primera_linea{
+#ajustes #ajustes_primera_linea {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 20px;
 }
 
-#ajustes_segunda_linea div{
+#ajustes_segunda_linea div {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -504,7 +506,7 @@ input {
     padding-right: 20px;
 }
 
-.separador_ajustes{
+.separador_ajustes {
     border-bottom: 1px solid rgb(0, 0, 0, 0.25);
     margin-top: 20px;
     margin-bottom: 25px;
@@ -512,7 +514,7 @@ input {
     margin-right: 20px;
 }
 
-#ajustes_tercera_linea div{
+#ajustes_tercera_linea div {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -520,7 +522,7 @@ input {
     padding-right: 10px;
 }
 
-#ajustes_tercera_linea .medida{
+#ajustes_tercera_linea .medida {
     margin-top: 10px;
 }
 
@@ -569,6 +571,7 @@ input {
 input:checked+.slider {
     background-color: #ccc;
 }
+
 /* 
 input:focus+.slider {
     box-shadow: 0 0 1px #2196F3;
@@ -591,8 +594,9 @@ input:checked+.slider:before {
 
 /*PILL NAV*/
 /* Style the links inside the pill navigation menu */
-.pill-nav{
-    width: 55%;
+.pill-nav {
+    width: 65%;
+    padding: 0 !important;
 }
 
 .pill-nav a {
@@ -608,19 +612,19 @@ input:checked+.slider:before {
     font-weight: 700;
     flex: 2 1 auto;
     transition: 0.3s;
-  }
-  
-  /* Change the color of links on mouse-over */
-  .pill-nav a:hover {
+}
+
+/* Change the color of links on mouse-over */
+.pill-nav a:hover {
     background-color: #81929b;
     color: black;
-  }
-  
-  /* Add a color to the active/current link */
-  .pill-nav a.active {
+}
+
+/* Add a color to the active/current link */
+.pill-nav a.active {
     background-color: #B0BEC5;
     color: black;
-  }
+}
 
 
 
@@ -655,15 +659,109 @@ input:checked+.slider:before {
     color: gray;
 }
 
-#contenedor_grafico{
+#contenedor_grafico {
     display: flex;
     flex-direction: column;
     height: max-content;
     /* width: 100%; */
 }
 
-canvas{
+canvas {
     flex: 1;
     /* height: 0;
     margin: 0; */
+}
+
+
+
+/*MEDIA QUERYS*/
+@media (width < 1570px) {
+
+    #contenido {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    #ubicaciones {
+        width: 60%;
+    }
+
+    #info_ubicacion {
+        width: 37%;
+    }
+
+    #tercera_seccion {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+        height: auto;
+        justify-content: flex-start;
+        height: 50vh;
+        gap: 25px;
+    }
+
+    #ajustes {
+        width: 37%;
+        height: 100%;
+    }
+
+    #seccion_grafico {
+        width: 60%;
+        height: 100%;
+
+    }
+}
+
+@media (width < 1288px) {
+
+    #ubicaciones {
+        width: 47%;
+    }
+
+    #info_ubicacion {
+        width: 50%;
+    }
+
+    .card_ubicacion{
+        width: 100%;
+    }
+
+    .medida{
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .medida p{
+        width: 100%;
+    }
+
+}
+
+@media (width < 1040px) , handheld and (orientation: portrait){
+    /* body{
+        background-color: red;
+    } */
+    #ubicaciones {
+        width: 100%;
+    }
+
+    #info_ubicacion {
+        width: 100%;
+    }
+
+    .card_ubicacion{
+        width: 49%;
+    }
+
+    #ajustes{
+        width: 100%;
+    }
+
+    #seccion_grafico{
+        width: 100%;
+    }
+
+    .medida p{
+        width: auto;
+    }
 }
